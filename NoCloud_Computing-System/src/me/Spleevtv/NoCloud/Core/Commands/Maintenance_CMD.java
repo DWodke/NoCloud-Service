@@ -43,9 +43,16 @@ public class Maintenance_CMD implements Command {
                 }
             } else if (args[1].equalsIgnoreCase("list")) {
                 if (args.length == 2) {
+                    System.out.println(Main.getPrefix() + Main.ANSI_RED + "Whitelist" + Main.ANSI_RESET + Main.ANSI_WHITE + ":" + Main.ANSI_RESET);
+                    int i = 0;
                     for(String name : FileManager.whitelist.getWhitelist()) {
-                        System.out.println(Main.getPrefix() + Main.ANSI_RED + "Whitelist" + Main.ANSI_RESET + Main.ANSI_WHITE + ":" + Main.ANSI_RESET);
                         System.out.println(Main.getPrefix() + "- " + Main.ANSI_GREEN + name + Main.ANSI_RESET);
+                        i++;
+                    }
+                    if(i == 0) {
+                        System.out.println(Main.getPrefix() + "Can't find maintenance list members.");
+                    } else {
+                        System.out.println(Main.getPrefix() + "- " + Main.ANSI_CYAN + i + " member." + Main.ANSI_RESET);
                     }
                 }
             }

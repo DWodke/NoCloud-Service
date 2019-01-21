@@ -83,6 +83,38 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-389490642">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.0" value="2" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="java" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JAVA" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="java" value="99" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="99" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="NoCloud_Computing-System" />
   </component>
   <component name="FileEditorManager">
     <leaf />
@@ -101,6 +133,9 @@
     <findStrings>
       <find>UPDATESTATE</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -146,7 +181,6 @@
         <option value="$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Core/Utils/BungeeCord.java" />
         <option value="$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Core/Commands/AddGroup_CMD.java" />
         <option value="$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Core/Commands/Stats_CMD.java" />
-        <option value="$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Core/Commands/Maintenance_CMD.java" />
         <option value="$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Core/Commands/Help_CMD.java" />
         <option value="$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Base/Utils/ProxyServer.java" />
         <option value="$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Base/Utils/ServerGroup.java" />
@@ -156,11 +190,12 @@
         <option value="$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Core/Commands/Info_CMD.java" />
         <option value="$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Core/Init.java" />
         <option value="$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Base/Utils/GameServer.java" />
+        <option value="$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Core/Commands/Maintenance_CMD.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="12" />
+    <option name="x" value="4" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
@@ -179,14 +214,13 @@
       </profile-state>
     </entry>
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -247,14 +281,16 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SearchEverywhereHistoryKey" value="REMOVEGROUP&#9;PSI&#9;JAVA://me.Spleevtv.NoCloud.Base.Utils.ProxyManager#removeProxyGroup" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547929341403" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548091204318" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
@@ -317,13 +353,13 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21641791" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49889868" visible="true" weight="0.22068231" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info id="Favorites" order="6" sideWeight="0.5011013" side_tool="true" weight="0.22068231" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -331,7 +367,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.329718" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.329718" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32929516" />
@@ -542,13 +578,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Core/Commands/Maintenance_CMD.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="55" column="99" selection-start-line="55" selection-start-column="99" selection-end-line="55" selection-end-column="99" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Core/Commands/Config_CMD.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -574,13 +603,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2093">
           <caret line="106" column="5" lean-forward="true" selection-start-line="106" selection-start-column="5" selection-end-line="106" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Base/Utils/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="17" column="43" lean-forward="true" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -685,6 +707,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="851">
           <caret line="45" column="36" lean-forward="true" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Base/Utils/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="12" column="34" lean-forward="true" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/me/Spleevtv/NoCloud/Core/Commands/Maintenance_CMD.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1081">
+          <caret line="51" column="32" lean-forward="true" selection-start-line="51" selection-start-column="32" selection-end-line="51" selection-end-column="32" />
         </state>
       </provider>
     </entry>
