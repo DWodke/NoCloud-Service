@@ -1,0 +1,49 @@
+# This is the Template of the cloud-signs.
+# %op% = onlineplayers | %mp% = maxplayers | %server% = currentserver
+ONLINE:
+  Hide: false
+  Block: '159:5'
+  Line-1: '&m------------&b'
+  Line-2: '&a%server%'
+  Line-3: '%op% / %mp%'
+  Line-4: '&m------------&b'
+  Animation: false
+  Animation-Splitter: ';'
+LOBBY:
+  Hide: false
+  Block: '159:5'
+  Line-1: '&m------------&b'
+  Line-2: '&a%server%'
+  Line-3: '%op% / %mp%'
+  Line-4: '&m------------&b'
+  Animation: false
+  Animation-Splitter: ';'
+INGAME:
+  Hide: false
+  Block: '159:1'
+  Line-1: '&m------------&b'
+  Line-2: '&6%server%'
+  Line-3: '%op% / %mp%'
+  Line-4: '&m------------&b'
+  Animation: false
+  Animation-Splitter: ';'
+ENDING:
+  Hide: false
+  Block: '159:14'
+  Line-1: '&m------------&b'
+  Line-2: '&c%server%'
+  Line-3: '%op% / %mp%'
+  Line-4: '&m------------&b'
+  Animation: false
+  Animation-Splitter: ';'
+SEARCHING:
+  Hide: false
+  Block: '159:14'
+  Line-1: '&m------------&b'
+  Line-2: '&4Searching'
+  Line-3: '&c.....'
+  Line-4: '&m------------&b'
+  Animation: false
+  Animation-Splitter: ';'
+Animation-Speed: 20
+Update-Speed: 10

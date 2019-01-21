@@ -1,0 +1,8 @@
+main: me.Spleevtv.main.Main
+name: NoCloud-BungeeAPI
+version: 0.1
+author: Dominik W.
+commands:
+  hub:
+  l:
+  lobby:

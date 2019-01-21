@@ -1,0 +1,46 @@
+ip_forward: true
+network_compression_threshold: 256
+stats: 331b78db-6111-43bb-99a7-4917ed942249
+groups:
+  SPLEEVTV:
+  - admin
+servers:
+  lobby:
+    motd: '&1Just another BungeeCord - Forced Host'
+    address: localhost:65535
+    restricted: false
+timeout: 30000
+player_limit: 100000
+listeners:
+- query_port: 25565
+  motd: ''
+  tab_list: GLOBAL_PING
+  query_enabled: false
+  proxy_protocol: false
+  forced_hosts:
+    pvp.md-5.net: pvp
+  ping_passthrough: false
+  bind_local_address: true
+  host: 0.0.0.0:25565
+  max_players: 100000
+  tab_size: 60
+  force_default_server: false
+  priorities:
+  - lobby
+prevent_proxy_connections: false
+permissions:
+  default:
+  admin:
+  - bungeecord.command.alert
+  - bungeecord.command.end
+  - bungeecord.command.ip
+  - bungeecord.command.reload
+  - cloud.startinfo
+  - cloud.stopinfo
+  - server.wartung
+  - cloud.use
+online_mode: true
+log_commands: false
+disabled_commands:
+- disabledcommandhere
+connection_throttle: -1
