@@ -38,8 +38,8 @@ public class Infos {
             socket.close();
             out.close();
             in.close();
-        }catch(IOException e){
-            e.printStackTrace();
+        } catch(Exception e){
+            this.data = new String[]{"&7A NoCloud service", "0", "0"};
         }
     }
     public String getMotd(){
