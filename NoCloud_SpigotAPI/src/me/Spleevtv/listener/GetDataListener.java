@@ -155,7 +155,9 @@ public class GetDataListener implements PluginMessageListener {
                         }
                     }
                     servergroup.removeServer(server);
+                    return;
                 }
+                servergroup.removeServer(server);
             }
         } catch (Exception e1) {
         }

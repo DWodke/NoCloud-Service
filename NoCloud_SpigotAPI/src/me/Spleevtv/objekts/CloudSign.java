@@ -609,4 +609,9 @@ public class CloudSign {
     public void setState(SignTemplateKind kind) {
         this.state = kind;
     }
+    public void setToSearching() {
+        this.curentserver = null;
+        this.state = SignTemplateKind.SEARCHING;
+        updateSign();
+    }
 }
