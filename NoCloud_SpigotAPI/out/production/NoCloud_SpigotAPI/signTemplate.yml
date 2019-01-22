@@ -1,5 +1,16 @@
-# This is the Template of the cloud-signs.
-# %op% = onlineplayers | %mp% = maxplayers | %server% = currentserver
+#______________________________________________________
+#  _   _        ____ _                 _
+# | \ | | ___  / ___| | ___  _   _  __| |
+# |  \| |/ _ \| |   | |/ _ \| | | |/ _` |
+# | |\  | (_) | |___| | (_) | |_| | (_| |
+# |_| \_|\___/ \____|_|\___/ \__,_|\__,_|
+#
+# This system is coded by 'Dominik W.'
+# When the group is on dynamic mode, then you save this file in the template directory.
+#______________________________________________________
+
+# This is the template of the cloud-signs.
+# %op% = onlineplayers | %mp% = maxplayers | %server% = currentserver | %motd% = motd of the currentserver
 ONLINE:
   Hide: false
   Block: '159:5'
@@ -45,5 +56,10 @@ SEARCHING:
   Line-4: '&m------------&b'
   Animation: false
   Animation-Splitter: ';'
+
+# This is the settings area.
 Animation-Speed: 20
 Update-Speed: 10
+PushPlayerFromSign: false
+PushPlayerFromSignDistance: 1.50
+PushPlayerFromSignStrength: 1

@@ -6,9 +6,9 @@
 # |_| \_|\___/ \____|_|\___/ \__,_|\__,_|
 #
 # This system is coded by 'Dominik W.'
-# When the group is on
+# When the group is on dynamic mode, then you save this file in the template directory.
 #______________________________________________________
 
-# Here You can change the prefix.
+# This is the 'prefix' and the 'no authority' message.
 Prefix: '&bNo&fCloud &8| &7'
 NoPerm: '%prefix%&cYou have no authority!'
