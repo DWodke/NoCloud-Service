@@ -1,5 +1,7 @@
 package me.Spleevtv.objekts;
 
+import me.Spleevtv.main.Main;
+
 /**
  * Created by 'SPLEEVTV | Dominik W.' on Jan, 2019
  */
@@ -45,6 +47,7 @@ public class GameServer {
     }
     public void updateState(ServerState arg0) {
         this.state = arg0;
+        Main.core.sendMessage("UPDATESTATE " + this.name + " " + state);
     }
     public Integer getPort() {
         return port;

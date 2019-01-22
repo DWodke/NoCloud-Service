@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class JoinQuitListener implements Listener {
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
+    public void handleJoin(PlayerJoinEvent e) {
         try {
             Player p = e.getPlayer();
             Main.core.sendMessage("JOINPLAYER " + p.getUniqueId().toString() + " " + NoCloudAPI.getServerAPI().getServerName());
@@ -22,7 +22,7 @@ public class JoinQuitListener implements Listener {
         }
     }
     @EventHandler
-    public void onQuit(PlayerQuitEvent e) {
+    public void handleQuit(PlayerQuitEvent e) {
         try {
             Player p = e.getPlayer();
             Main.core.sendMessage("QUITPLAYER " + p.getUniqueId().toString() + " " + NoCloudAPI.getServerAPI().getServerName());
