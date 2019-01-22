@@ -29,5 +29,4 @@ public class ServerGroup {
     public HashMap<String, GameServer> getServers() {
         return server;
     }
-
 }

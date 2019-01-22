@@ -606,4 +606,7 @@ public class CloudSign {
             }
         }
     }
+    public void setState(SignTemplateKind kind) {
+        this.state = kind;
+    }
 }

@@ -93,6 +93,13 @@ public class Main extends JavaPlugin {
                     if(!sign.getLocation().getChunk().isLoaded()) {
                         sign.getLocation().getChunk().load();
                     }
+                    if(sign.getCurrentGroup().getServers().isEmpty()) {
+                        if(sign.getState() != SignTemplateKind.SEARCHING) {
+                            sign.setState(SignTemplateKind.SEARCHING);
+                            sign.updateSign();
+                            continue;
+                        }
+                    }
                     if(sign.getState() == SignTemplateKind.SEARCHING) {
                         sign.search();
                         continue;
