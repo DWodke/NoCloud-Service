@@ -1,6 +1,5 @@
 package me.Spleevtv.NoCloud.Core.Utils;
 
-import jdk.internal.util.xml.impl.ReaderUTF8;
 import me.Spleevtv.NoCloud.Main;
 
 import java.io.*;
@@ -16,7 +15,7 @@ public class BaseList {
         File file = new File("./Core/Base_List.yml");
         try {
             FileInputStream in = new FileInputStream(file);
-            BufferedReader reader = new BufferedReader(new ReaderUTF8(in));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
             String line;
             while((line = reader.readLine()) != null) {
                 if(!this.base_list.contains(line)) {

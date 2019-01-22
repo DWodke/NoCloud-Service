@@ -1,16 +1,10 @@
 package me.Spleevtv.NoCloud.Base;
 
-import jdk.internal.util.xml.impl.ReaderUTF8;
 import me.Spleevtv.NoCloud.Base.Utils.*;
 import me.Spleevtv.NoCloud.Main;
 import java.io.*;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class Init {
 
@@ -34,7 +28,7 @@ public class Init {
             File proxy_list = new File("./Base/proxy_list.yml");
             canServerStart = true;
             try {
-                BufferedReader reader = new BufferedReader(new ReaderUTF8(new FileInputStream(proxy_list)));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(proxy_list), "UTF-8"));
                 String line;
                 File settings = new File("./Base/groups_settings.yml");
                 Config cfg = new Config(settings);
@@ -48,7 +42,7 @@ public class Init {
             }
             File gameserver_list = new File("./Base/server_list.yml");
             try {
-                BufferedReader reader = new BufferedReader(new ReaderUTF8(new FileInputStream(gameserver_list)));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(gameserver_list), "UTF-8"));
                 String line;
                 File settings = new File("./Base/groups_settings.yml");
                 Config cfg = new Config(settings);

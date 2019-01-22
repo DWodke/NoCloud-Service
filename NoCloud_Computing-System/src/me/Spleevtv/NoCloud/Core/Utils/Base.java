@@ -1,6 +1,5 @@
 package me.Spleevtv.NoCloud.Core.Utils;
 
-import jdk.internal.util.xml.impl.ReaderUTF8;
 import me.Spleevtv.NoCloud.Core.Init;
 import me.Spleevtv.NoCloud.Main;
 
