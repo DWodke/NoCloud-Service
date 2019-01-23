@@ -233,8 +233,15 @@ public class Core {
                             } else if(line.startsWith("RESTARTAUTOSERVER")) {
                                 String[] args = line.split(" ");
                                 String server = args[1];
-                                String group = args[1].split("-")[1];
                                 Init.game_servers.get(server).restartServer();
+                            } else if(line.startsWith("EDITGROUP")) {
+                                String[] args = line.split(" ");
+                                String group = args[1];
+                                String value = args[2];
+                                String arg = args[3];
+                                if(value.equalsIgnoreCase("onlineAmount")) {
+                                    Init.game_groups.get(group).editOnlineServerValue(Integer.parseInt(arg));
+                                }
                             }
                         }
                     } catch (IOException e) {

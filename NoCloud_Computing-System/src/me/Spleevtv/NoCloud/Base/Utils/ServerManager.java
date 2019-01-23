@@ -27,7 +27,6 @@ public class ServerManager {
                 }
                 o++;
             }
-            o = 0;
             File settings = new File("./Base/groups_settings.yml");
             Config cfg = new Config(settings);
             cfg.load();
@@ -133,7 +132,6 @@ public class ServerManager {
                 o++;
             }
             currentgroup.addPorts(updatedPorts);
-            currentgroup.editServers(currentgroup.getMaxServerValue() + servers);
             for(int i = current +1; i < end; i++) {
                 currentgroup.startServerOutGroup(i);
             }

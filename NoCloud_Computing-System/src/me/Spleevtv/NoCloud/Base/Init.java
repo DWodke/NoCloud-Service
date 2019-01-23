@@ -48,6 +48,7 @@ public class Init {
                 Config cfg = new Config(settings);
                 cfg.load();
                 while((line = reader.readLine()) != null) {
+                    core.sendTheCoreAMessage("INITGROUP " + line + " " + cfg.getInt(line + ".ServerOnStart") + " " + cfg.getInt(line + ".ServerValue") + " " + cfg.getInt(line + ".MaxRam") + " " + cfg.getInt(line + ".MaxPlayers") + " " + cfg.get(line + ".HaveTemplate"));
                     game_groups.put(line, new ServerGroup(line, cfg.getInt(line + ".MaxRam"), Boolean.parseBoolean(cfg.get(line + ".HaveTemplate")), cfg.getInt(line + ".ServerValue"), cfg.getInt(line + ".ServerOnStart"), cfg.getInt(line + ".MaxPlayers"), cfg.get(line + ".Ports")));
                 }
                 cfg.unload();
