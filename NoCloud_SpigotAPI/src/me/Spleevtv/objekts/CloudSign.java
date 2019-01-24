@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.event.server.ServerListPingEvent;
+import org.bukkit.util.Vector;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -608,5 +609,10 @@ public class CloudSign {
     }
     public void setState(SignTemplateKind kind) {
         this.state = kind;
+    }
+    public void setToSearching() {
+        this.curentserver = null;
+        this.state = SignTemplateKind.SEARCHING;
+        updateSign();
     }
 }

@@ -9,8 +9,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +36,9 @@ public class Main extends JavaPlugin {
     public static HashMap<SignTemplateKind, SignTemplate> templates = new HashMap<SignTemplateKind, SignTemplate>();
     public static Integer animationspeed;
     public static Integer updatespeed;
+    public static Boolean pushfromsign;
+    public static Double pushfromsigndistance;
+    public static Double pushfromsignstrength;
     public static ArrayList<GameServer> usedserver = new ArrayList<GameServer>();
     public static HashMap<String, CloudSign> signs = new HashMap<String, CloudSign>();
 
@@ -62,6 +67,9 @@ public class Main extends JavaPlugin {
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         animationspeed = cfg.getInt("Animation-Speed");
         updatespeed = cfg.getInt("Update-Speed");
+        pushfromsign = cfg.getBoolean("PushPlayerFromSign");
+        pushfromsigndistance = cfg.getDouble("PushPlayerFromSignDistance");
+        pushfromsignstrength = cfg.getDouble("PushPlayerFromSignStrength");
         for(SignTemplateKind kind : SignTemplateKind.values()) {
             templates.put(kind, new SignTemplate(kind));
         }
@@ -90,10 +98,17 @@ public class Main extends JavaPlugin {
             @Override
             public void run() {
                 for(CloudSign sign : signs.values()) {
+                    if(pushfromsign) {
+                        for(Player all : Bukkit.getOnlinePlayers()) {
+                            if(sign.getLocation().distance(all.getLocation()) <= pushfromsigndistance || sign.getLocation().distance(all.getEyeLocation()) <= pushfromsigndistance) {
+                                all.setVelocity(sign.getLocation().getDirection().multiply(pushfromsignstrength));
+                            }
+                        }
+                    }
                     if(!sign.getLocation().getChunk().isLoaded()) {
                         sign.getLocation().getChunk().load();
                     }
-                    if(sign.getCurrentGroup().getServers().isEmpty()) {
+                    if(sign.getCurrentGroup() == null || sign.getCurrentGroup().getServers().isEmpty()) {
                         if(sign.getState() != SignTemplateKind.SEARCHING) {
                             sign.setState(SignTemplateKind.SEARCHING);
                             sign.updateSign();

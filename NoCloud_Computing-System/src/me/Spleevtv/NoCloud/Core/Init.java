@@ -20,6 +20,7 @@ public class Init {
     public static HashMap<String, String[]> online_servers = new HashMap<String, String[]>();
     public static CloudPlayers players;
     public static HashMap<String, GameServer> gameserver = new HashMap<String, GameServer>();
+    public static HashMap<String, ServerGroup> groups = new HashMap<String, ServerGroup>();
     public static Integer addedfallbackserver;
     public static HashMap<String, Integer> latestplayer = new HashMap<String, Integer>();
     public static ServerChannel serverchannel;

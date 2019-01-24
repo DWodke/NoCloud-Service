@@ -110,7 +110,7 @@ public class Listserver_CMD implements Command {
     public String getUsage() {
         return Main.ANSI_GREEN + "listservers" + Main.ANSI_RESET + " | Show all available server of the cloud";
     }
-    public double round(double betrag) {
+    public static double round(double betrag) {
         double round = Math.round(betrag*10000);
         round = round / 10000;
         round = Math.round(round*1000);

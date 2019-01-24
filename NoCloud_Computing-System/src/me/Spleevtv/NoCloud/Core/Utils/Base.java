@@ -100,6 +100,17 @@ public class Base {
                                         proxy.sendTheProxyAMessage("STOPSPIGOTSERVER " + server);
                                     }
                                 }
+                            } else if(line.startsWith("INITGROUP")) {
+                                String[] args = line.split(" ");
+                                String name = args[1];
+                                Integer onlineAmount = Integer.parseInt(args[2]);
+                                Integer maxAmount = Integer.parseInt(args[3]);
+                                Integer maxRam = Integer.parseInt(args[4]);
+                                Integer maxPlayers = Integer.parseInt(args[5]);
+                                Boolean dynamic = Boolean.parseBoolean(args[6]);
+                                if(!Init.groups.containsKey(name)) {
+                                    Init.groups.put(name, new ServerGroup(name, onlineAmount, maxAmount, maxRam, maxPlayers, dynamic));
+                                }
                             }
                         } else {
                             if(r.read() == -1) {

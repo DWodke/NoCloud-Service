@@ -120,4 +120,13 @@ public class GameServer {
     public Integer getMaxram() {
         return maxram;
     }
+    public void setMaxServerValue(Integer maxservervalue) {
+        this.maxservervalue = maxservervalue;
+    }
+    public void setMaxRam(Integer maxram) {
+        this.maxram = maxram;
+    }
+    public void setMaxPlayers(Integer maxplayers) {
+        this.maxplayers = maxplayers;
+    }
 }

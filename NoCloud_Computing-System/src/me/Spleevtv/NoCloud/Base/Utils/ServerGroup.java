@@ -64,7 +64,7 @@ public class ServerGroup {
         cfg.save();
         cfg.unload();
     }
-    public void editServers(int server_value) {
+    public void editMaxServerValue(int server_value) {
         File settings = new File("./Base/groups_settings.yml");
         Config cfg = new Config(settings);
         cfg.load();
@@ -73,7 +73,7 @@ public class ServerGroup {
         cfg.save();
         cfg.unload();
     }
-    public void editHaveTemplate(Boolean template) {
+    public void editDynamic(Boolean template) {
         File settings = new File("./Base/groups_settings.yml");
         Config cfg = new Config(settings);
         cfg.load();
@@ -82,14 +82,18 @@ public class ServerGroup {
         cfg.save();
         cfg.unload();
     }
-    public void editServerOnStart(int servers) {
+    public void editOnlineServerValue(int i) {
         File settings = new File("./Base/groups_settings.yml");
         Config cfg = new Config(settings);
         cfg.load();
-        this.onlineamount = servers;
-        cfg.set(this.name + ".ServerOnStart", servers + "");
+        this.onlineamount = i;
+        cfg.set(this.name + ".ServerOnStart", i + "");
         cfg.save();
         cfg.unload();
+        if(Init.game_servers.size() < i) {
+            Integer def = i - Init.game_servers.size();
+            this.startServersOutGroup(def);
+        }
     }
     public void editMaxPlayers(int max) {
         File settings = new File("./Base/groups_settings.yml");
@@ -157,9 +161,13 @@ public class ServerGroup {
             if(temp.exists()) {
                 this.delete(temp);
             }
-            if(!Init.proxy_servers.containsKey(name)) {
+            if(!Init.game_servers.containsKey(name)) {
                 serverNotStarted.add(i + "");
             }
+        }
+        if(serverNotStarted.size() < ser) {
+            Integer def = ser - serverNotStarted.size();
+            ServerManager.addServersToGroup(def, this.getName(), );
         }
         for(int i = 0; i < ser; i++) {
             startServerOutGroup(Integer.parseInt(serverNotStarted.get(i)));
