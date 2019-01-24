@@ -25,6 +25,7 @@ public class ProxyServer {
     public ProxyServer(String n, int p, ProxyGroup g, int m, Boolean h, Integer max, int conport) {
         this.name = n;
         this.port = p;
+        ServerProcessManager.registerPort(this.port);
         this.maxram = m;
         this.group = g;
         this.haveTemplate = h;
@@ -354,5 +355,8 @@ public class ProxyServer {
         PrintStream writer = new PrintStream(this.process.getOutputStream());
         writer.println(cmd + "\n");
         writer.flush();
+    }
+    public int getPort() {
+        return port;
     }
 }

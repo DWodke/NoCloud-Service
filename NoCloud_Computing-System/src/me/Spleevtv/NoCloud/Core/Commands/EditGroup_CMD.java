@@ -16,18 +16,15 @@ public class EditGroup_CMD  implements Command {
                 System.out.println(Main.getPrefix() + getUsage());
                 return;
             }
-            if(args[1].equalsIgnoreCase("onlineAmount")) {
-                String group = args[2];
+            String group = args[1];
+            if(args[2].equalsIgnoreCase("onlineAmount")) {
                 if(Init.groups.containsKey(group)) {
                     Integer onlineAmount = Integer.parseInt(args[3]);
                     try {
                         if(GroupManager.editOnlineAmount(group, onlineAmount)) {
-                            System.out.println(Main.getPrefix() + Main.ANSI_GREEN + "The following group has changed his data:" + Main.ANSI_RESET);
-                            for(GameServer server : Init.gameserver.values()) {
-                                if(server.getGroup().equalsIgnoreCase(group)) {
-                                    Double elipsedTime = (double) System.currentTimeMillis() - Init.time.get(server.getServername());
-                                    elipsedTime = elipsedTime / 1000;
-                                    System.out.println(Main.getPrefix() + Main.ANSI_GREEN + server.getServername()
+                            ServerGroup servergroup = Init.groups.get(group);
+                            System.out.println(Main.getPrefix() + Main.ANSI_RED + "The following group has changed his data:" + Main.ANSI_RESET);
+                            System.out.println(Main.getPrefix() + Main.ANSI_GREEN + group
                                             + Main.ANSI_RESET
                                             + Main.ANSI_WHITE
                                             + " ("
@@ -39,78 +36,388 @@ public class EditGroup_CMD  implements Command {
                                             + ":"
                                             + Main.ANSI_RESET
                                             + Main.ANSI_CYAN
-                                            + " " + server.getMaxram() + "MB"
+                                            + " " + servergroup.getMaxRam() + "MB"
                                             + Main.ANSI_RESET
                                             + Main.ANSI_WHITE
                                             + ", "
                                             + Main.ANSI_RESET
                                             + Main.ANSI_YELLOW
-                                            + "maxplayers"
+                                            + "onlineAmount"
                                             + Main.ANSI_RESET
                                             + Main.ANSI_WHITE
                                             + ":"
                                             + Main.ANSI_RESET
                                             + Main.ANSI_CYAN
-                                            + " " + server.getMaxPlayers()
+                                            + " " + servergroup.getOnlineAmount()
                                             + Main.ANSI_RESET
                                             + Main.ANSI_WHITE
                                             + ", "
                                             + Main.ANSI_RESET
                                             + Main.ANSI_YELLOW
-                                            + "uptime"
+                                            + "maxAmount"
                                             + Main.ANSI_RESET
                                             + Main.ANSI_WHITE
                                             + ":"
                                             + Main.ANSI_RESET
                                             + Main.ANSI_CYAN
-                                            + " " + Listserver_CMD.round(elipsedTime) + " seconds"
+                                            + " " + servergroup.getMaxAmount()
                                             + Main.ANSI_RESET
                                             + Main.ANSI_WHITE
                                             + ", "
                                             + Main.ANSI_RESET
                                             + Main.ANSI_YELLOW
-                                            + "onlineplayer"
+                                            + "maxPlayers"
                                             + Main.ANSI_RESET
                                             + Main.ANSI_WHITE
                                             + ":"
                                             + Main.ANSI_RESET
                                             + Main.ANSI_CYAN
-                                            + " " + server.getSize()
+                                            + " " + servergroup.getMaxPlayers()
                                             + Main.ANSI_RESET
                                             + Main.ANSI_WHITE
                                             + ", "
                                             + Main.ANSI_RESET
                                             + Main.ANSI_YELLOW
-                                            + "base"
+                                            + "dynamic"
                                             + Main.ANSI_RESET
                                             + Main.ANSI_WHITE
                                             + ":"
                                             + Main.ANSI_RESET
                                             + Main.ANSI_CYAN
-                                            + " " + server.getCurrentbase().getName()
-                                            + Main.ANSI_RESET
-                                            + Main.ANSI_WHITE
-                                            + ", "
-                                            + Main.ANSI_RESET
-                                            + Main.ANSI_YELLOW
-                                            + "state"
-                                            + Main.ANSI_RESET
-                                            + Main.ANSI_WHITE
-                                            + ":"
-                                            + Main.ANSI_RESET
-                                            + Main.ANSI_CYAN
-                                            + " " + server.getState()
+                                            + " " + servergroup.getDynamic()
                                             + Main.ANSI_RESET
                                             + Main.ANSI_WHITE
                                             + ")"
                                             + Main.ANSI_RESET);
-                                }
-                            }
                         } else {
-                            System.out.println(Main.getPrefix() + Main.ANSI_RED + "An error is available!" + Main.ANSI_RESET);
+                            System.out.println(Main.getPrefix() + Main.ANSI_RED + "The value is higher then the maxAmount!" + Main.ANSI_RESET);
                         }
                     } catch (NumberFormatException e) {
                         System.out.println(Main.getPrefix() + Main.ANSI_RED + "Pls type in the console a number!" + Main.ANSI_RESET);
+                    }
+                } else {
+                    System.out.println(Main.getPrefix() + Main.ANSI_RED + "This group isn't exists!" + Main.ANSI_RESET);
+                }
+            } else if(args[2].equalsIgnoreCase("maxAmount")) {
+                if(Init.groups.containsKey(group)) {
+                    Integer maxAmount = Integer.parseInt(args[3]);
+                    try {
+                        if(GroupManager.editMaxAmount(group, maxAmount)) {
+                            ServerGroup servergroup = Init.groups.get(group);
+                            System.out.println(Main.getPrefix() + Main.ANSI_RED + "The following group has changed his data:" + Main.ANSI_RESET);
+                            System.out.println(Main.getPrefix() + Main.ANSI_GREEN + group
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + " ("
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "memory"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxRam() + "MB"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "onlineAmount"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getOnlineAmount()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "maxAmount"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxAmount()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "maxPlayers"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxPlayers()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "dynamic"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getDynamic()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ")"
+                                    + Main.ANSI_RESET);
+                        } else {
+                            System.out.println(Main.getPrefix() + Main.ANSI_RED + "The value is lower then the onlineAmount!" + Main.ANSI_RESET);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println(Main.getPrefix() + Main.ANSI_RED + "Pls type in the console a number!" + Main.ANSI_RESET);
+                    }
+                } else {
+                    System.out.println(Main.getPrefix() + Main.ANSI_RED + "This group isn't exists!" + Main.ANSI_RESET);
+                }
+            } else if(args[2].equalsIgnoreCase("maxRam")) {
+                if(Init.groups.containsKey(group)) {
+                    Integer maxRam = Integer.parseInt(args[3]);
+                    try {
+                        if(GroupManager.editMaxRam(group, maxRam)) {
+                            ServerGroup servergroup = Init.groups.get(group);
+                            System.out.println(Main.getPrefix() + Main.ANSI_RED + "The following group has changed his data:" + Main.ANSI_RESET);
+                            System.out.println(Main.getPrefix() + Main.ANSI_GREEN + group
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + " ("
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "memory"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxRam() + "MB"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "onlineAmount"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getOnlineAmount()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "maxAmount"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxAmount()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "maxPlayers"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxPlayers()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "dynamic"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getDynamic()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ")"
+                                    + Main.ANSI_RESET);
+                        } else {
+                            System.out.println(Main.getPrefix() + Main.ANSI_RED + "The value is equals then the last!" + Main.ANSI_RESET);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println(Main.getPrefix() + Main.ANSI_RED + "Pls type in the console a number!" + Main.ANSI_RESET);
+                    }
+                } else {
+                    System.out.println(Main.getPrefix() + Main.ANSI_RED + "This group isn't exists!" + Main.ANSI_RESET);
+                }
+            } else if(args[2].equalsIgnoreCase("maxPlayers")) {
+                if(Init.groups.containsKey(group)) {
+                    Integer maxPlayers = Integer.parseInt(args[3]);
+                    try {
+                        if(GroupManager.editMaxPlayers(group, maxPlayers)) {
+                            ServerGroup servergroup = Init.groups.get(group);
+                            System.out.println(Main.getPrefix() + Main.ANSI_RED + "The following group has changed his data:" + Main.ANSI_RESET);
+                            System.out.println(Main.getPrefix() + Main.ANSI_GREEN + group
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + " ("
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "memory"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxRam() + "MB"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "onlineAmount"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getOnlineAmount()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "maxAmount"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxAmount()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "maxPlayers"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxPlayers()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "dynamic"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getDynamic()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ")"
+                                    + Main.ANSI_RESET);
+                        } else {
+                            System.out.println(Main.getPrefix() + Main.ANSI_RED + "The value is equals then the last!" + Main.ANSI_RESET);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println(Main.getPrefix() + Main.ANSI_RED + "Pls type in the console a number!" + Main.ANSI_RESET);
+                    }
+                } else {
+                    System.out.println(Main.getPrefix() + Main.ANSI_RED + "This group isn't exists!" + Main.ANSI_RESET);
+                }
+            } else if(args[2].equalsIgnoreCase("dynamic")) {
+                if(Init.groups.containsKey(group)) {
+                    Boolean dynamic = Boolean.parseBoolean(args[3]);
+                    try {
+                        if(GroupManager.editDynamic(group, dynamic)) {
+                            ServerGroup servergroup = Init.groups.get(group);
+                            System.out.println(Main.getPrefix() + Main.ANSI_RED + "The following group has changed his data:" + Main.ANSI_RESET);
+                            System.out.println(Main.getPrefix() + Main.ANSI_GREEN + group
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + " ("
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "memory"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxRam() + "MB"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "onlineAmount"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getOnlineAmount()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "maxAmount"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxAmount()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "maxPlayers"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getMaxPlayers()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ", "
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_YELLOW
+                                    + "dynamic"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ":"
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_CYAN
+                                    + " " + servergroup.getDynamic()
+                                    + Main.ANSI_RESET
+                                    + Main.ANSI_WHITE
+                                    + ")"
+                                    + Main.ANSI_RESET);
+                        } else {
+                            System.out.println(Main.getPrefix() + Main.ANSI_RED + "The value is equals then the last!" + Main.ANSI_RESET);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println(Main.getPrefix() + Main.ANSI_RED + "Pls type in the console a boolean!" + Main.ANSI_RESET);
                     }
                 } else {
                     System.out.println(Main.getPrefix() + Main.ANSI_RED + "This group isn't exists!" + Main.ANSI_RESET);

@@ -67,9 +67,8 @@ public class Core {
                                 int maxRam = Integer.parseInt(args[4]);
                                 Boolean dinamic = Boolean.parseBoolean(args[5]);
                                 int maxPlayers = Integer.parseInt(args[6]);
-                                String ports = args[7];
-                                String proxyPorts = args[8];
-                                ProxyManager.createProxyGroup(groupName, maxRam, dinamic, servers, onlineAmount, maxPlayers, ports, proxyPorts);
+                                String proxyPorts = args[7];
+                                ProxyManager.createProxyGroup(groupName, maxRam, dinamic, servers, onlineAmount, maxPlayers, 25565, proxyPorts);
                             } else if(line.startsWith("CREATESERVERGROUP")) {
                                 String[] args = line.split(" ");
                                 String groupName = args[1];
@@ -78,8 +77,7 @@ public class Core {
                                 int maxRam = Integer.parseInt(args[4]);
                                 Boolean dinamic = Boolean.parseBoolean(args[5]);
                                 int maxPlayers = Integer.parseInt(args[6]);
-                                String ports = args[7];
-                                ServerManager.createServerGroup(groupName, maxRam, dinamic, servers, onlineAmount, maxPlayers, ports);
+                                ServerManager.createServerGroup(groupName, maxRam, dinamic, servers, onlineAmount, maxPlayers, 40000);
                             } else if(line.startsWith("STARTPROXYSERVER")) {
                                 String[] args = line.split(" ");
                                 String server = args[1];
@@ -241,6 +239,14 @@ public class Core {
                                 String arg = args[3];
                                 if(value.equalsIgnoreCase("onlineAmount")) {
                                     Init.game_groups.get(group).editOnlineServerValue(Integer.parseInt(arg));
+                                } else if(value.equalsIgnoreCase("maxAmount")) {
+                                    Init.game_groups.get(group).editMaxServerValue(Integer.parseInt(arg));
+                                } else if(value.equalsIgnoreCase("maxPlayers")) {
+                                    Init.game_groups.get(group).editMaxPlayers(Integer.parseInt(arg));
+                                } else if(value.equalsIgnoreCase("maxRam")) {
+                                    Init.game_groups.get(group).editMaxRam(Integer.parseInt(arg));
+                                } else if(value.equalsIgnoreCase("dynamic")) {
+                                    Init.game_groups.get(group).editDynamic(Boolean.parseBoolean(arg));
                                 }
                             }
                         }

@@ -27,6 +27,7 @@ public class GameServer {
     public GameServer(String n, int p, ServerGroup g, int m, Boolean h, Integer max) {
         this.name = n;
         this.port = p;
+        ServerProcessManager.registerPort(this.port);
         this.maxram = m;
         this.group = g;
         this.haveTemplate = h;
@@ -312,5 +313,8 @@ public class GameServer {
     }
     public Integer getId() {
         return Integer.parseInt(this.getName().split("-")[0]);
+    }
+    public int getPort() {
+        return port;
     }
 }

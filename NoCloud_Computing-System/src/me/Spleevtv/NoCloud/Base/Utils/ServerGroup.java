@@ -17,21 +17,16 @@ public class ServerGroup {
     private int maxamount;
     private int onlineamount;
     private int maxplayers;
-    private HashMap<String, Integer> ports = new HashMap<String, Integer>();
+    private int startPort;
 
-    public ServerGroup(String n, int m, Boolean h, int s, int sonstart, int max, String portString) {
+    public ServerGroup(String n, int m, Boolean h, int s, int sonstart, int max, int startp) {
         this.name = n;
         this.maxram = m;
         this.haveTemplate = h;
         this.maxamount = s;
         this.onlineamount = sonstart;
         this.maxplayers = max;
-        String[] strings = portString.split(",");
-        for(String cache : strings) {
-            String key = cache.split(":")[0];
-            String value = cache.split(":")[1];
-            ports.put(key, Integer.parseInt(value));
-        }
+        this.startPort = startp;
         startServersOutGroup(this.onlineamount);
     }
     public Boolean getHaveTemplate() {
@@ -52,9 +47,6 @@ public class ServerGroup {
     public int getMaxPlayers() {
         return maxplayers;
     }
-    public int getPortFromServer(String arg0) {
-        return this.ports.get(arg0);
-    }
     public void editMaxRam(int max) {
         File settings = new File("./Base/groups_settings.yml");
         Config cfg = new Config(settings);
@@ -63,6 +55,7 @@ public class ServerGroup {
         cfg.set(this.name + ".MaxRam", max + "");
         cfg.save();
         cfg.unload();
+        this.restartAllServersOutGroup();
     }
     public void editMaxServerValue(int server_value) {
         File settings = new File("./Base/groups_settings.yml");
@@ -72,6 +65,10 @@ public class ServerGroup {
         cfg.set(this.name + ".ServerValue", server_value + "");
         cfg.save();
         cfg.unload();
+        if(this.getOnlineServer() > this.maxamount) {
+            Integer stop = this.getOnlineServer() - this.maxamount;
+            this.stopServersOutGroup(stop);
+        }
     }
     public void editDynamic(Boolean template) {
         File settings = new File("./Base/groups_settings.yml");
@@ -81,6 +78,8 @@ public class ServerGroup {
         cfg.set(this.name + ".HaveTemplate", template + "");
         cfg.save();
         cfg.unload();
+        this.stopAllServersOutGroup();
+        this.startAllServersOutGroup();
     }
     public void editOnlineServerValue(int i) {
         File settings = new File("./Base/groups_settings.yml");
@@ -90,9 +89,12 @@ public class ServerGroup {
         cfg.set(this.name + ".ServerOnStart", i + "");
         cfg.save();
         cfg.unload();
-        if(Init.game_servers.size() < i) {
-            Integer def = i - Init.game_servers.size();
-            this.startServersOutGroup(def);
+        if(this.getOnlineServer() < this.onlineamount) {
+            this.startAllOnlineAmountServer();
+        } else if(this.getOnlineServer() == this.onlineamount) {
+            return;
+        } else {
+            this.stopAllServerOverOnlineAmount();
         }
     }
     public void editMaxPlayers(int max) {
@@ -103,35 +105,73 @@ public class ServerGroup {
         cfg.set(this.name + ".MaxPlayers", max + "");
         cfg.save();
         cfg.unload();
-    }
-    public void addPorts(String p) {
-        File settings = new File("./Base/groups_settings.yml");
-        Config cfg = new Config(settings);
-        cfg.load();
-        String updatedPorts = cfg.get(this.name + ".Ports") + p;
-        cfg.set(this.name + ".Ports", updatedPorts);
-        cfg.save();
-        cfg.unload();
-        String[] strings = updatedPorts.split(",");
-        ports.clear();
-        for(String cache : strings) {
-            String key = cache.split(":")[0];
-            String value = cache.split(":")[1];
-            ports.put(key, Integer.parseInt(value));
-        }
+        this.restartAllServersOutGroup();
     }
     public void startAllServersOutGroup() {
         for(int i = 1; i <= this.maxamount; i++) {
             String name = this.name + "-" + i;
-            GameServer server = new GameServer(name, this.ports.get(name), this, this.maxram, this.haveTemplate, this.maxplayers);
+            GameServer server = new GameServer(name, ServerProcessManager.getNextFreePort(this.startPort), this, this.maxram, this.haveTemplate, this.maxplayers);
             server.startServer();
+        }
+    }
+    public void restartAllServersOutGroup() {
+        ArrayList<String> ids = new ArrayList<String>();
+        for(int i = 1; i <= this.maxamount; i++) {
+            String name = this.name + "-" + i;
+            if(Init.game_servers.containsKey(name)) {
+                ids.add(name);
+            }
+        }
+        for(String name : ids) {
+            Init.game_servers.get(name).stopServer();
+        }
+        for(String name : ids) {
+            this.startServerOutGroup(Integer.parseInt(name.split("-")[1]));
         }
     }
     public void stopAllServersOutGroup() {
         for(int i = 1; i <= this.maxamount; i++) {
             String name = this.name + "-" + i;
             if(Init.game_servers.containsKey(name)) {
+                ServerProcessManager.unregisterPort(Init.game_servers.get(name).getPort());
                 Init.game_servers.get(name).stopServer();
+            }
+        }
+    }
+    public void stopAllServerOverOnlineAmount() {
+        Integer online = this.getOnlineServer();
+        if(online <= this.onlineamount) {
+            return;
+        }
+        for(int i = this.maxamount; i >= 1; i--) {
+            String name = this.name + "-" + i;
+            if(online == this.onlineamount) {
+                return;
+            }
+            if(Init.game_servers.containsKey(name)) {
+                ServerProcessManager.unregisterPort(Init.game_servers.get(name).getPort());
+                Init.game_servers.get(name).stopServer();
+                online--;
+            }
+        }
+    }
+    public void stopServersOutGroup(Integer servers) {
+        Integer online = this.getOnlineServer();
+        if((online + servers) <= this.onlineamount) {
+            return;
+        }
+        for(int i = this.maxamount; i >= 1; i--) {
+            String name = this.name + "-" + i;
+            if(servers == this.onlineamount) {
+                return;
+            }
+            if(servers == 0) {
+                return;
+            }
+            if(Init.game_servers.containsKey(name)) {
+                ServerProcessManager.unregisterPort(Init.game_servers.get(name).getPort());
+                Init.game_servers.get(name).stopServer();
+                servers--;
             }
         }
     }
@@ -141,7 +181,7 @@ public class ServerGroup {
             return;
         }
         if(!Init.game_servers.containsKey(name)) {
-            new GameServer(name, this.ports.get(name), this, this.maxram, this.haveTemplate, this.maxplayers).startServer();
+            new GameServer(name, ServerProcessManager.getNextFreePort(this.startPort), this, this.maxram, this.haveTemplate, this.maxplayers).startServer();
         }
     }
     public void stopServerOutGroup(int id) {
@@ -150,27 +190,57 @@ public class ServerGroup {
             return;
         }
         if(Init.game_servers.containsKey(name)) {
+            ServerProcessManager.unregisterPort(Init.game_servers.get(name).getPort());
             Init.game_servers.get(name).stopServer();
         }
+    }
+    public Integer getOnlineServer() {
+        Integer online = 0;
+        for(int i = 1; i <= this.maxamount; i++) {
+            String name = this.name + "-" + i;
+            if(Init.game_servers.containsKey(name)) {
+                online++;
+            }
+        }
+        return online;
     }
     public void startServersOutGroup(int ser) {
         ArrayList<String> serverNotStarted = new ArrayList<String>();
         for(int i = 1; i <= this.maxamount; i++) {
             String name = this.name + "-" + i;
-            File temp = new File("./Base/temporary/" + this.name + "/" + name + "/");
-            if(temp.exists()) {
-                this.delete(temp);
-            }
             if(!Init.game_servers.containsKey(name)) {
                 serverNotStarted.add(i + "");
             }
         }
-        if(serverNotStarted.size() < ser) {
-            Integer def = ser - serverNotStarted.size();
-            ServerManager.addServersToGroup(def, this.getName(), );
-        }
         for(int i = 0; i < ser; i++) {
+            if(i > this.maxamount) {
+                return;
+            }
             startServerOutGroup(Integer.parseInt(serverNotStarted.get(i)));
+        }
+    }
+    public void startAllOnlineAmountServer() {
+        Integer online = 0;
+        ArrayList<Integer> serverdoesonline = new ArrayList<Integer>();
+        for(int i = 1; i <= this.maxamount; i++) {
+            String name = this.name + "-" + i;
+            if(Init.game_servers.containsKey(name)) {
+                online++;
+            } else {
+                serverdoesonline.add(i);
+            }
+        }
+        if(!(online >= this.onlineamount)) {
+            Integer a;
+            a = this.onlineamount - online;
+            for(int i = 0; i < a; i++) {
+                if(i > this.maxamount) {
+                    return;
+                }
+                startServerOutGroup(serverdoesonline.get(i));
+            }
+        } else {
+            return;
         }
     }
     private void delete(File dir){

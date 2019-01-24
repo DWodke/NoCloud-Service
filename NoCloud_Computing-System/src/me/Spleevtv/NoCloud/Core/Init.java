@@ -55,6 +55,7 @@ public class Init {
         addCommand(new Maintenance_CMD());
         addCommand(new Stats_CMD());
         addCommand(new Listserver_CMD());
+        addCommand(new EditGroup_CMD());
         new Thread(new Runnable() {
             @Override
             public void run() {

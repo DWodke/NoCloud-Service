@@ -14,22 +14,17 @@ public class ProxyGroup {
     private int servers;
     private int serveronstart;
     private int maxplayers;
-    private HashMap<String, Integer> ports = new HashMap<String, Integer>();
+    private int startPort;
     private HashMap<String, Integer> connection_ports = new HashMap<String, Integer>();
 
-    public ProxyGroup(String n, int m, Boolean h, int s, int sonstart, int max, String portString, String connectionPorts) {
+    public ProxyGroup(String n, int m, Boolean h, int s, int sonstart, int max, int startPort, String connectionPorts) {
         this.name = n;
         this.maxram = m;
         this.haveTemplate = h;
         this.servers = s;
         this.serveronstart = sonstart;
         this.maxplayers = max;
-        String[] strings = portString.split(",");
-        for(String cache : strings) {
-            String key = cache.split(":")[0];
-            String value = cache.split(":")[1];
-            ports.put(key, Integer.parseInt(value));
-        }
+        this.startPort = startPort;
         String[] strings2 = connectionPorts.split(",");
         for(String cache : strings2) {
             String key = cache.split(":")[0];
@@ -101,26 +96,10 @@ public class ProxyGroup {
         cfg.save();
         cfg.unload();
     }
-    public void addPorts(String p) {
-        File settings = new File("./Base/groups_settings.yml");
-        Config cfg = new Config(settings);
-        cfg.load();
-        String updatedPorts = cfg.get(this.name + ".Ports") + p;
-        cfg.set(this.name + ".Ports", updatedPorts);
-        cfg.save();
-        cfg.unload();
-        String[] strings = updatedPorts.split(",");
-        ports.clear();
-        for(String cache : strings) {
-            String key = cache.split(":")[0];
-            String value = cache.split(":")[1];
-            ports.put(key, Integer.parseInt(value));
-        }
-    }
     public void startAllServersOutGroup() {
         for(int i = 1; i <= this.servers; i++) {
             String name = this.name + "-" + i;
-            ProxyServer proxy = new ProxyServer(name, this.ports.get(name), this, this.maxram, this.haveTemplate, this.maxplayers, this.connection_ports.get(name));
+            ProxyServer proxy = new ProxyServer(name, ServerProcessManager.getNextFreePort(this.startPort), this, this.maxram, this.haveTemplate, this.maxplayers, this.connection_ports.get(name));
             proxy.startServer();
         }
     }
@@ -128,17 +107,18 @@ public class ProxyGroup {
         for(int i = 1; i <= this.servers; i++) {
             String name = this.name + "-" + i;
             if(Init.proxy_servers.containsKey(name)) {
+                ServerProcessManager.unregisterPort(Init.proxy_servers.get(name).getPort());
                 Init.proxy_servers.get(name).stopServer();
             }
         }
     }
     public void startServerOutGroup(int id) {
-            String name = this.name + "-" + id;
+        String name = this.name + "-" + id;
         if(id > this.getMaxServerValue()) {
             return;
         }
             if(!Init.proxy_servers.containsKey(name)) {
-                new ProxyServer(name, this.ports.get(name), this, this.maxram, this.haveTemplate, this.maxplayers, this.connection_ports.get(name)).startServer();
+                new ProxyServer(name, ServerProcessManager.getNextFreePort(this.startPort), this, this.maxram, this.haveTemplate, this.maxplayers, this.connection_ports.get(name)).startServer();
             }
     }
     public void stopServerOutGroup(int id) {
@@ -147,6 +127,7 @@ public class ProxyGroup {
             return;
         }
         if(Init.proxy_servers.containsKey(name)) {
+            ServerProcessManager.unregisterPort(Init.proxy_servers.get(name).getPort());
             Init.proxy_servers.get(name).stopServer();
         }
     }

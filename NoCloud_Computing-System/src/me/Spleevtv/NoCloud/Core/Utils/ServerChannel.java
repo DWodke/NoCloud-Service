@@ -89,10 +89,12 @@ public class ServerChannel {
                             String uuid = args[1];
                             String server = args[2];
                             GameServer gameserver = Init.gameserver.get(server);
-                            gameserver.addPlayer(Init.players.getPlayerList().get(uuid));
-                            Init.players.getPlayerList().get(uuid).setCurrentserver(server);
-                            for(BungeeCord proxy : Init.proxys) {
-                                proxy.sendTheProxyAMessage("UPDATESERVERPLAYERSIZE " + server + " " + gameserver.getSize());
+                            if(Init.players.getPlayerList().get(uuid) != null) {
+                                gameserver.addPlayer(Init.players.getPlayerList().get(uuid));
+                                Init.players.getPlayerList().get(uuid).setCurrentserver(server);
+                                for(BungeeCord proxy : Init.proxys) {
+                                    proxy.sendTheProxyAMessage("UPDATESERVERPLAYERSIZE " + server + " " + gameserver.getSize());
+                                }
                             }
                         } else if(message.startsWith("QUITPLAYER")) {
                             String[] args = message.split(" ");

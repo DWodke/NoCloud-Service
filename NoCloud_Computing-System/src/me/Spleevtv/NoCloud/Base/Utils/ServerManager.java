@@ -13,20 +13,8 @@ import java.io.IOException;
  */
 public class ServerManager {
 
-    public static void createServerGroup(String name, int maxram, Boolean h, int s, int seronstart, int maxp, String portString) {
+    public static void createServerGroup(String name, int maxram, Boolean h, int s, int seronstart, int maxp, int startPort) {
         if(!Init.proxy_groups.containsKey(name)) {
-            int o = 0;
-            String[] ports = portString.split(",");
-            String updatedPorts = null;
-            for(int i = 1; i <= s; i++) {
-                String n = name + "-" + i;
-                if(updatedPorts == null) {
-                    updatedPorts =  n + ":" + ports[o] + ",";
-                } else {
-                    updatedPorts = updatedPorts + n + ":" + ports[o] + ",";
-                }
-                o++;
-            }
             File settings = new File("./Base/groups_settings.yml");
             Config cfg = new Config(settings);
             cfg.load();
@@ -35,7 +23,7 @@ public class ServerManager {
             cfg.set(name + ".HaveTemplate", h + "");
             cfg.set(name + ".ServerOnStart", seronstart + "");
             cfg.set(name + ".MaxPlayers", maxp + "");
-            cfg.set(name + ".Ports", updatedPorts);
+            cfg.set(name + ".StartPort", startPort + "");
             cfg.save();
             cfg.unload();
             File server_list = new File("./Base/server_list.yml");
@@ -43,7 +31,7 @@ public class ServerManager {
                 if(server_list.exists()) {
                     server_list.delete();
                 }
-                ServerGroup g = new ServerGroup(name, maxram, h, s, seronstart, maxp, updatedPorts);
+                ServerGroup g = new ServerGroup(name, maxram, h, s, seronstart, maxp, startPort);
                 Init.game_groups.put(name, g);
                 BufferedWriter writer = new BufferedWriter(new FileWriter(server_list));
                 for(String group : Init.game_groups.keySet()) {
@@ -52,7 +40,7 @@ public class ServerManager {
                 }
                 writer.flush();
                 writer.close();
-
+                Init.core.sendTheCoreAMessage("INITGROUP " + name + " " + seronstart + " " + s + " " + maxram + " " + maxp + " " + h);
                 g.startServerOutGroup(seronstart);
                 System.out.println(Main.getPrefix() + "Server '" + name + "' was successfully created/loaded.");
             } catch (IOException e) {
@@ -71,9 +59,10 @@ public class ServerManager {
             cfg.remove(name + ".HaveTemplate");
             cfg.remove(name + ".ServerOnStart");
             cfg.remove(name + ".MaxPlayers");
-            cfg.remove(name + ".Ports");
+            cfg.remove(name + ".StartPort");
             cfg.save();
             cfg.unload();
+            Init.core.sendTheCoreAMessage("DISINITGROUP " + name);
             currentgroup.stopAllServersOutGroup();
             Init.game_groups.remove(name);
             File ordner = new File("./Base/temporary/" + name + "/");
@@ -111,30 +100,6 @@ public class ServerManager {
             dir.delete();
         } else {
             dir.delete();
-        }
-    }
-    public static void addServersToGroup(int servers, String group, String p) {
-        ServerGroup currentgroup = Init.game_groups.get(group);
-        if(currentgroup != null) {
-            String[] ports = p.split(",");
-            int end = currentgroup.getMaxServerValue() + servers;
-            int current = currentgroup.getMaxServerValue();
-
-            String updatedPorts = null;
-            int o = 0;
-            for(int i = current +1; i < end; i++) {
-                String name = group + "-" + i;
-                if(updatedPorts == null) {
-                    updatedPorts =  name + ":" + ports[o] + ",";
-                } else {
-                    updatedPorts = updatedPorts + name + ":" + ports[o] + ",";
-                }
-                o++;
-            }
-            currentgroup.addPorts(updatedPorts);
-            for(int i = current +1; i < end; i++) {
-                currentgroup.startServerOutGroup(i);
-            }
         }
     }
 }

@@ -17,7 +17,8 @@ public class GroupManager {
                         return false;
                     }
                     servergroup.setOnlineAmount(i);
-                    Init.baselist.getBaselist().get(base).sendTheBaseAMessage("EDITGROUP " + group + " onlineAmount " + i);
+                    Init.baselist.getBaselist().get(base).sendTheBaseAMessage("EDITGROUP " + group + " onlineAmount " + i + " ");
+                    return true;
                 } else {
                     return false;
                 }
@@ -41,6 +42,7 @@ public class GroupManager {
                     }
                     servergroup.setMaxAmount(i);
                     Init.baselist.getBaselist().get(base).sendTheBaseAMessage("EDITGROUP " + group + " maxAmount " + i);
+                    return true;
                 } else {
                     return false;
                 }
@@ -63,6 +65,7 @@ public class GroupManager {
                 }
                 servergroup.setMaxRam(i);
                 Init.baselist.getBaselist().get(base).sendTheBaseAMessage("EDITGROUP " + group + " maxRam " + i);
+                return true;
             }
         }
         return false;
@@ -82,6 +85,7 @@ public class GroupManager {
                 }
                 servergroup.setMaxPlayers(i);
                 Init.baselist.getBaselist().get(base).sendTheBaseAMessage("EDITGROUP " + group + " maxPlayers " + i);
+                return true;
             }
         }
         return false;
@@ -96,6 +100,7 @@ public class GroupManager {
                 }
                 servergroup.setDynamic(b);
                 Init.baselist.getBaselist().get(base).sendTheBaseAMessage("EDITGROUP " + group + " dynamic " + b);
+                return true;
             }
         }
         return false;

@@ -28,16 +28,6 @@ public class AddGroup_CMD implements Command {
                         if(Init.baselist.getBaselist().containsKey(baseName)) {
                             Base base = Init.baselist.getBaselist().get(baseName);
                             if(base.getAccesToStartServer()) {
-                                String ports = null;
-                                int o = Init.cache.getBungeeAnfangsPort();
-                                for(int i = 0; i < servers; i++) {
-                                    if(ports == null) {
-                                        ports = o + ",";
-                                    } else {
-                                        ports = ports + o + ",";
-                                    }
-                                    o++;
-                                }
                                 int c = Init.cache.getProxy_connection_port();
                                 String c_ports = null;
                                 for(int i = 0; i < servers; i++) {
@@ -49,10 +39,9 @@ public class AddGroup_CMD implements Command {
                                     Init.proxys.add(new BungeeCord(c));
                                     c++;
                                 }
-                                Init.cache.editBungeeAnfangsPort(Init.cache.getBungeeAnfangsPort() + servers);
                                 Init.cache.editProxyConnectionPorts(Init.cache.getProxy_connection_port() + servers);
                                 Init.cache.editBungeeCords(Init.cache.getBungeeCords() + servers);
-                                base.sendTheBaseAMessage("CREATEPROXYGROUP " + groupName + " " + onlineAmount + " " + servers + " " + ram + " " + dinamic + " " + maxPlayers + " " + ports + " " + c_ports);
+                                base.sendTheBaseAMessage("CREATEPROXYGROUP " + groupName + " " + onlineAmount + " " + servers + " " + ram + " " + dinamic + " " + maxPlayers + " " + c_ports);
                                 Base_Servers.addGroupToCache(groupName, base.getName());
                                 System.out.println(Main.getPrefix() + "The base '" + baseName + "' has create the group '" + groupName + "'.");
                                 System.out.println(Main.getPrefix() + "Told base " + baseName + " to start proxygroup '" + groupName + "'.");
@@ -81,21 +70,10 @@ public class AddGroup_CMD implements Command {
                         if(Init.baselist.getBaselist().containsKey(baseName)) {
                             Base base = Init.baselist.getBaselist().get(baseName);
                             if(base.getAccesToStartServer()) {
-                                String ports = null;
-                                int o = Init.cache.getSpigotAnfangPorts();
-                                for(int i = 0; i < servers; i++) {
-                                    if(ports == null) {
-                                        ports = o + ",";
-                                    } else {
-                                        ports = ports + o + ",";
-                                    }
-                                    o++;
-                                }
-                                Init.cache.editSpigotAnfangsPort(Init.cache.getSpigotAnfangPorts() + servers);
-                                base.sendTheBaseAMessage("CREATESERVERGROUP " + groupName + " " + onlineAmount + " " + servers + " " + ram + " " + dinamic + " " + maxPlayers + " " + ports);
+                                base.sendTheBaseAMessage("CREATESERVERGROUP " + groupName + " " + onlineAmount + " " + servers + " " + ram + " " + dinamic + " " + maxPlayers);
                                 Base_Servers.addGroupToCache(groupName, base.getName());
                                 System.out.println(Main.getPrefix() + "The base '" + baseName + "' has create the group '" + groupName + "'.");
-                                System.out.println(Main.getPrefix() + "Told base " + baseName + " to start server_group '" + groupName + "'.");
+                                System.out.println(Main.getPrefix() + "Told base " + baseName + " to start servergroup '" + groupName + "'.");
                             } else {
                                 System.out.println(Main.getPrefix() + "The base '" + baseName + "' has no templates. (spigot.jar and BungeeCord.jar)");
                             }
