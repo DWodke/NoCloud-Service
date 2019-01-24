@@ -111,6 +111,12 @@ public class Base {
                                 if(!Init.groups.containsKey(name)) {
                                     Init.groups.put(name, new ServerGroup(name, onlineAmount, maxAmount, maxRam, maxPlayers, dynamic));
                                 }
+                            } else if(line.startsWith("DISINITGROUP")) {
+                                String[] args = line.split(" ");
+                                String name = args[1];
+                                if(Init.groups.containsKey(name)) {
+                                    Init.groups.remove(name);
+                                }
                             }
                         } else {
                             if(r.read() == -1) {
