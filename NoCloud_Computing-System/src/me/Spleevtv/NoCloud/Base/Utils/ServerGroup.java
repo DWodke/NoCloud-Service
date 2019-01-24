@@ -78,8 +78,7 @@ public class ServerGroup {
         cfg.set(this.name + ".HaveTemplate", template + "");
         cfg.save();
         cfg.unload();
-        this.stopAllServersOutGroup();
-        this.startAllServersOutGroup();
+        this.restartAllServersOutGroup();
     }
     public void editOnlineServerValue(int i) {
         File settings = new File("./Base/groups_settings.yml");

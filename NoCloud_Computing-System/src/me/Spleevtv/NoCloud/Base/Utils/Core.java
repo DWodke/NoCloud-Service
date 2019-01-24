@@ -248,6 +248,17 @@ public class Core {
                                 } else if(value.equalsIgnoreCase("dynamic")) {
                                     Init.game_groups.get(group).editDynamic(Boolean.parseBoolean(arg));
                                 }
+                            } else if(line.startsWith("COPYDIR")) {
+                                String[] args = line.split(" ");
+                                String server = args[1];
+                                File tocopy = new File("./Base/temporary/" + server.split("-")[0] + "/" + server + "/");
+                                File aim = new File("./Base/templates/" + server.split("-")[0] + "/");
+                                try {
+                                    FileManager.copyFile(tocopy, aim);
+                                    System.out.println(Main.getPrefix() + "The template was created successfully!");
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     } catch (IOException e) {
