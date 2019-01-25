@@ -251,6 +251,11 @@ public class Core {
                             } else if(line.startsWith("COPYDIR")) {
                                 String[] args = line.split(" ");
                                 String server = args[1];
+                                File dir = new File("./Base/templates/" + server.split("-")[0] + "/");
+                                if(dir.exists()) {
+                                    ServerManager.delete(dir);
+                                }
+                                dir.mkdirs();
                                 FileManager.copyDir("./Base/temporary/" + server.split("-")[0] + "/" + server + "/", "./Base/templates/" + server.split("-")[0] + "/");
                                 System.out.println(Main.getPrefix() + "The template was created successfully!");
                             }

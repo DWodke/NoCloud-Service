@@ -90,7 +90,7 @@ public class ServerManager {
             }
         }
     }
-    private static void delete(File dir){
+    public static void delete(File dir){
         if (dir.isDirectory()){
             String[] entries = dir.list();
             for (int x=0;x<entries.length;x++){
