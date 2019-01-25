@@ -135,4 +135,11 @@ public class FileManager {
             }
         }
     }
+    public static void copyDir(String source, String target) {
+        try {
+            Files.copy(Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+    }
 }

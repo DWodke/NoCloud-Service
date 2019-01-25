@@ -100,6 +100,10 @@ public class Base {
                                         proxy.sendTheProxyAMessage("STOPSPIGOTSERVER " + server);
                                     }
                                 }
+                                if(Init.gameserver.containsKey(server)) {
+                                    Init.gameserver.remove(server);
+                                    System.out.println(Main.getPrefix() + "The server '" + server + "' is unregistered now.");
+                                }
                             } else if(line.startsWith("INITGROUP")) {
                                 String[] args = line.split(" ");
                                 String name = args[1];
