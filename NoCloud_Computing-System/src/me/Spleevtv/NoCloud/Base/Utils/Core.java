@@ -231,7 +231,9 @@ public class Core {
                             } else if(line.startsWith("RESTARTAUTOSERVER")) {
                                 String[] args = line.split(" ");
                                 String server = args[1];
-                                Init.game_servers.get(server).restartServer();
+                                if(Init.game_servers.get(server) != null) {
+                                    Init.game_servers.get(server).restartServer();
+                                }
                             } else if(line.startsWith("EDITGROUP")) {
                                 String[] args = line.split(" ");
                                 String group = args[1];
