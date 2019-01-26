@@ -57,12 +57,14 @@ public class ServerChannel {
                             }
                         } else if(message.startsWith("UNREGISTERSERVER")) {
                             String[] args = message.split(" ");
-                            System.out.println(Main.getPrefix() + "The server '" + args[1] + "' is unregistered now.");
-                            if(Init.gameserver.get(args[1]).getRestartState()) {
-                                Init.baselist.getBaselist().get(Base_Servers.getBase(args[1].split("-")[0])).sendTheBaseAMessage("RESTARTAUTOSERVER " + args[1]);
-                            }
-                            if(Init.gameserver.containsKey(args[1])) {
-                                Init.gameserver.remove(args[1]);
+                            if(Init.gameserver.get(args[1]) != null) {
+                                System.out.println(Main.getPrefix() + "The server '" + args[1] + "' is unregistered now.");
+                                if(Init.gameserver.get(args[1]).getRestartState()) {
+                                    Init.baselist.getBaselist().get(Base_Servers.getBase(args[1].split("-")[0])).sendTheBaseAMessage("RESTARTAUTOSERVER " + args[1]);
+                                }
+                                if(Init.gameserver.containsKey(args[1])) {
+                                    Init.gameserver.remove(args[1]);
+                                }
                             }
                         } else if(message.startsWith("UPDATESTATE")) {
                             String[] args = message.split(" ");

@@ -1,6 +1,7 @@
 package me.Spleevtv.main;
 
 import me.Spleevtv.commands.HubCMD;
+import me.Spleevtv.commands.NoCloudCMD;
 import me.Spleevtv.listener.*;
 import me.Spleevtv.objekts.CloudPlayer;
 import me.Spleevtv.objekts.Core;
@@ -15,8 +16,14 @@ import net.md_5.bungee.config.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Main extends Plugin {
@@ -56,6 +63,10 @@ public class Main extends Plugin {
     public static String alreadyonhub;
     public static String tabheader;
     public static String tabfooter;
+    public static List<String> helpmap = new ArrayList<String>();
+    public static Integer maxPings = 0;
+    public static Integer registeredPlayers = 0;
+    public static Integer pingsLast5Minutes = 0;
 
     @Override
     public void onEnable() {
@@ -73,6 +84,18 @@ public class Main extends Plugin {
             getDataFolder().mkdirs();
         }
         updateConfig();
+        File messagefile = new File(this.getDataFolder().getPath() + "/messages.yml");
+        if(!messagefile.exists()) {
+            insertData("messages.yml", this.getDataFolder().getPath() + "/messages.yml");
+        }
+        try {
+            Configuration cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(messagefile);
+            for(String s : cfg.getStringList("HelpMap")) {
+                helpmap.add(s.replaceAll("%prefix%", prefix).replaceAll("&", "§"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         onlineplayers = 0;
         maxplayers = 0;
         core = new Core(ip, port);
@@ -88,6 +111,7 @@ public class Main extends Plugin {
         manager.registerCommand(this, new HubCMD("hub"));
         manager.registerCommand(this, new HubCMD("l"));
         manager.registerCommand(this, new HubCMD("lobby"));
+        manager.registerCommand(this, new NoCloudCMD("nocloud"));
     }
     public static ServerInfo getBestPerformenceFallbackServer() {
         ServerInfo little = null;
@@ -98,6 +122,15 @@ public class Main extends Plugin {
             }
         }
         return little;
+    }
+    public static final void insertData(String paramString1, String paramString2) {
+        InputStream localInputStream = Main.class.getClassLoader().getResourceAsStream(paramString1);
+        try {
+            Files.copy(localInputStream, Paths.get(paramString2, new String[0]),
+                    new CopyOption[] { StandardCopyOption.REPLACE_EXISTING });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public static void updateConfig() {
         File file = new File(instance.getDataFolder().getPath() + "/config.yml");

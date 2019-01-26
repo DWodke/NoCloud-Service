@@ -141,7 +141,6 @@ public class FileManager {
                 } else {
                     full_messages.add(message);
                 }
-
             }
             Init.bungee_template = new BungeeTemplate(bungeeconfig.get("motd_1"), bungeeconfig.get("motd_2"), bungeeconfig.get("maintenance_motd_1"), bungeeconfig.get("maintenance_motd_2"), bungeeconfig.getInt("maxplayers"), Boolean.parseBoolean(bungeeconfig.get("maintenance")), bungeeconfig.get("fallbackServerGroup"), i, m_messages, full_i, full_messages, bungeeconfig.getInt("fallbackServerUntilANewServerStartPercent"));
             bungeeconfig.unload();

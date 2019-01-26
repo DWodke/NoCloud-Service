@@ -1,0 +1,26 @@
+#______________________________________________________
+#  _   _        ____ _                 _
+# | \ | | ___  / ___| | ___  _   _  __| |
+# |  \| |/ _ \| |   | |/ _ \| | | |/ _` |
+# | |\  | (_) | |___| | (_) | |_| | (_| |
+# |_| \_|\___/ \____|_|\___/ \__,_|\__,_|
+#
+# This system is coded by 'Dominik W.'
+# This is the message config of the nocloud-proxy.
+#______________________________________________________
+
+HelpMap:
+  - '&8&m------------------------------------'
+  - '%prefix%&a/NoCloud addGroup &f<&eserver&f,&eproxy&f> <&ename&f> <&emaxAmount&f> <&eonlineAmount&f> <&emaxRam&f> <&emaxPlayers&f> <&ebase&f>'
+  - '%prefix%&a/NoCloud removeGroup &f<&egroup&f>'
+  - '%prefix%&a/NoCloud editGroup &f<&egroup&f> <&evariable&7(&bonlineAmount, maxAmount, maxRam, maxPlayer or dynamic&7)&f> <&evalue&f>'
+  - '%prefix%&a/NoCloud start &f<&egroup/server&f>'
+  - '%prefix%&a/NoCloud stop &f<&egroup/server&f>'
+  - '%prefix%&a/NoCloud restart &f<&egroup/server&f>'
+  - '%prefix%&a/NoCloud listServers'
+  - '%prefix%&a/NoCloud copy &f<&eserver&f>'
+  - '%prefix%&a/NoCloud sendCommand &f<&eserver/group&f> &f<&ecommand&f>'
+  - '%prefix%&a/NoCloud config &f<&ereload/reset&f>'
+  - '%prefix%&a/NoCloud maintenance &f<&eon/off/add/remove/list&f> &7| &f<&eplayer&f>'
+  - '%prefix%&a/NoCloud stats'
+  - '&8&m------------------------------------'

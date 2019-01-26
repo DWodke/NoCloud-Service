@@ -126,6 +126,103 @@ public class BungeeCord {
                                 String[] args = line.split(" ");
                                 String host = args[1];
                                 Init.playerstats.addPing(host);
+                            } else if(line.startsWith("GETSTATS")) {
+                                String[] args = line.split(" ");
+                                sendTheProxyAMessage("STATSUPDATE " + Init.playerstats.getMaxPings() + " " + Init.playerstats.getPingsFromLast5min() + " " + Init.playerstats.getRegisteredPlayerSize());
+                            } else if(line.startsWith("RESTARTSERVER")) {
+                                String[] args = line.split(" ");
+                                String value = args[1];
+                                if(value.contains("-")) {
+                                    String base = Base_Servers.getBase(value.split("-")[0]);
+                                    if(base != null) {
+                                        Init.baselist.getBaselist().get(base).sendTheBaseAMessage("RESTARTSERVER " + args[1]);
+                                    }
+                                } else {
+                                    String base = Base_Servers.getBase(value);
+                                    if(base != null) {
+                                        Init.baselist.getBaselist().get(base).sendTheBaseAMessage("RESTARTGROUP " + args[1]);
+                                    }
+                                }
+                            } else if(line.startsWith("STARTSERVER")) {
+                                String[] args = line.split(" ");
+                                String value = args[1];
+                                if(value.contains("-")) {
+                                    String base = Base_Servers.getBase(value.split("-")[0]);
+                                    if(base != null) {
+                                        if(Init.groups.containsKey(value.split("-")[0])) {
+                                            Init.baselist.getBaselist().get(base).sendTheBaseAMessage("STARTSERVER " + value);
+                                        } else {
+                                            Init.baselist.getBaselist().get(base).sendTheBaseAMessage("STARTPROXYSERVER " + value);
+                                        }
+                                    }
+                                } else {
+                                    String base = Base_Servers.getBase(value);
+                                    if(base != null) {
+                                        if(Init.groups.containsKey(value)) {
+                                            Init.baselist.getBaselist().get(base).sendTheBaseAMessage("STARTGROUP " + value);
+                                        } else {
+                                            Init.baselist.getBaselist().get(base).sendTheBaseAMessage("STARTPROXYGROUP " + value);
+                                        }
+                                    }
+                                }
+                            } else if(line.startsWith("STOPSERVER")) {
+                                String[] args = line.split(" ");
+                                String value = args[1];
+                                if(value.contains("-")) {
+                                    String base = Base_Servers.getBase(value.split("-")[0]);
+                                    if(base != null) {
+                                        if(Init.gameserver.containsKey(value)) {
+                                            Init.gameserver.get(value).setRestartState(false);
+                                            Init.baselist.getBaselist().get(base).sendTheBaseAMessage("STOPSERVER " + value);
+                                        } else {
+                                            Init.baselist.getBaselist().get(base).sendTheBaseAMessage("STOPPROXYSERVER " + value);
+                                        }
+                                    }
+                                } else {
+                                    String base = Base_Servers.getBase(value);
+                                    if(base != null) {
+                                        if(Init.groups.containsKey(value)) {
+                                            for(GameServer gs : Init.gameserver.values()) {
+                                                if(gs.getGroup().equalsIgnoreCase(value)) {
+                                                    Init.gameserver.get(gs.getServername()).setRestartState(false);
+                                                }
+                                            }
+                                            Init.baselist.getBaselist().get(base).sendTheBaseAMessage("STOPGROUP " + value);
+                                        } else {
+                                            Init.baselist.getBaselist().get(base).sendTheBaseAMessage("STOPPROXYGROUP " + value);
+                                        }
+                                    }
+                                }
+                            } else if(line.startsWith("REMOVEGROUP")) {
+                                String[] args = line.split(" ");
+                                String value = args[1];
+                                String base = Base_Servers.getBase(value);
+                                if(base != null) {
+                                    for(GameServer server : Init.gameserver.values()) {
+                                        if(server.getGroup().equals(value)) {
+                                            server.setRestartState(false);
+                                        }
+                                    }
+                                    Init.baselist.getBaselist().get(base).sendTheBaseAMessage("REMOVEGROUP " + value);
+                                }
+                            } else if(line.startsWith("COPY")) {
+                                String[] args = line.split(" ");
+                                String value = args[1];
+                                String base = Base_Servers.getBase(value.split("-")[0]);
+                                if(base != null) {
+                                    Init.baselist.getBaselist().get(base).sendTheBaseAMessage("COPYDIR " + value);
+                                }
+                            } else if(line.startsWith("MAINTENANCE")) {
+                                String[] args = line.split(" ");
+                                Boolean value = Boolean.parseBoolean(args[1]);
+                                File bungee_config = new File("./Core/BungeeCord_Config.yml");
+                                Config bungeeconfig = new Config(bungee_config);
+                                bungeeconfig.load();
+                                bungeeconfig.set("maintenance", value + "");
+                                bungeeconfig.save();
+                                bungeeconfig.unload();
+                                FileManager.updateConfig();
+                                pushConfigs();
                             }
                         } else {
                             if(r.read() == -1) {

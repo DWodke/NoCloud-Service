@@ -101,8 +101,11 @@ public class Base {
                                     }
                                 }
                                 if(Init.gameserver.containsKey(server)) {
-                                    Init.gameserver.remove(server);
                                     System.out.println(Main.getPrefix() + "The server '" + server + "' is unregistered now.");
+                                    if(Init.gameserver.get(args[1]).getRestartState()) {
+                                        Init.baselist.getBaselist().get(Base_Servers.getBase(args[1].split("-")[0])).sendTheBaseAMessage("RESTARTAUTOSERVER " + args[1]);
+                                    }
+                                    Init.gameserver.remove(server);
                                 }
                             } else if(line.startsWith("INITGROUP")) {
                                 String[] args = line.split(" ");

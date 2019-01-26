@@ -15,7 +15,6 @@ public class MotdListener implements Listener {
     public void onPing(ProxyPingEvent e) {
         ServerPing ping = e.getResponse();
         ServerPing.Players p = ping.getPlayers();
-
         p.setMax(Main.maxplayers);
         p.setOnline(Main.onlineplayers);
         if(Main.maintenance) {

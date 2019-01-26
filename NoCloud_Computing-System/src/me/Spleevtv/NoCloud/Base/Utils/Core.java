@@ -256,7 +256,7 @@ public class Core {
                                     ServerManager.delete(dir);
                                 }
                                 dir.mkdirs();
-                                FileManager.copyDir("./Base/temporary/" + server.split("-")[0] + "/" + server + "/", "./Base/templates/" + server.split("-")[0] + "/");
+                                FileManager.copy(new File("./Base/temporary/" + server.split("-")[0] + "/" + server + "/"), dir);
                                 System.out.println(Main.getPrefix() + "The template was created successfully!");
                             }
                         }

@@ -209,6 +209,11 @@ public class Core {
                             for(ServerInfo info : ProxyServer.getInstance().getServers().values()) {
                                 ServerInfos.sendUpdate(gameserver, info);
                             }
+                        } else if(line.startsWith("STATSUPDATE")) {
+                            String[] args = line.split(" ");
+                            Main.maxPings = Integer.parseInt(args[1]);
+                            Main.pingsLast5Minutes = Integer.parseInt(args[2]);
+                            Main.registeredPlayers = Integer.parseInt(args[3]);
                         }
                     }
                 } catch (IOException e) {
