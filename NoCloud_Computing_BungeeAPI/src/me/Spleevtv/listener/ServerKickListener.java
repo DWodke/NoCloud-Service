@@ -13,9 +13,7 @@ public class ServerKickListener implements Listener {
 
     @EventHandler
     public void onServerKickEvent(ServerKickEvent e) {
-        e.setCancelServer(null);
         e.setCancelled(true);
-        e.getPlayer().sendMessage(e.getKickReason());
         if(e.getPlayer().getServer().getInfo().getName().startsWith(Main.fallbackServerGroup)) {
             return;
         }
