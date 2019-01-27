@@ -25,9 +25,11 @@ public class Init {
     public static HashMap<String, Integer> latestplayer = new HashMap<String, Integer>();
     public static ServerChannel serverchannel;
     public static PlayerStats playerstats;
+    public static Long starttime;
     public static HashMap<String, Long> time = new HashMap<String, Long>();
 
     public static void startCore() {
+        starttime = System.currentTimeMillis();
         startCommandReading();
         FileManager.loadAllFiles();
         serverchannel = new ServerChannel();

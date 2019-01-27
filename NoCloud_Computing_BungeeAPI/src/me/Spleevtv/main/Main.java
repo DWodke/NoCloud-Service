@@ -67,6 +67,8 @@ public class Main extends Plugin {
     public static Integer maxPings = 0;
     public static Integer registeredPlayers = 0;
     public static Integer pingsLast5Minutes = 0;
+    public static Long cloudstarttime;
+    public static Integer basesize;
 
     @Override
     public void onEnable() {

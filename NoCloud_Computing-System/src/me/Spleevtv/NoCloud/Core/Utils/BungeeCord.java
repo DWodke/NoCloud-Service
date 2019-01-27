@@ -128,7 +128,7 @@ public class BungeeCord {
                                 Init.playerstats.addPing(host);
                             } else if(line.startsWith("GETSTATS")) {
                                 String[] args = line.split(" ");
-                                sendTheProxyAMessage("STATSUPDATE " + Init.playerstats.getMaxPings() + " " + Init.playerstats.getPingsFromLast5min() + " " + Init.playerstats.getRegisteredPlayerSize());
+                                sendTheProxyAMessage("STATSUPDATE " + Init.playerstats.getMaxPings() + " " + Init.playerstats.getPingsFromLast5min() + " " + Init.playerstats.getRegisteredPlayerSize() + " " + Init.starttime + " " + Init.baselist.getBaselist().size());
                             } else if(line.startsWith("RESTARTSERVER")) {
                                 String[] args = line.split(" ");
                                 String value = args[1];

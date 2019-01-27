@@ -136,15 +136,17 @@ public class FileManager {
         }
     }
     public static void copy(File from, File to) throws IOException {
-        if (!to.exists()) {
-            to.mkdirs();
-        }
-        for (File file : from.listFiles()) {
-            if (file.isDirectory()) {
-                copy(file, new File(to.getAbsolutePath() + "/" + file.getName()));
-            } else {
-                File n = new File(to.getAbsolutePath() + "/" + file.getName());
-                Files.copy(file.toPath(), n.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        if(from.exists()) {
+            if (!to.exists()) {
+                to.mkdirs();
+            }
+            for (File file : from.listFiles()) {
+                if (file.isDirectory()) {
+                    copy(file, new File(to.getAbsolutePath() + "/" + file.getName()));
+                } else {
+                    File n = new File(to.getAbsolutePath() + "/" + file.getName());
+                    Files.copy(file.toPath(), n.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                }
             }
         }
     }

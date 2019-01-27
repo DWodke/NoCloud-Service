@@ -258,8 +258,28 @@ public class Core {
                                     ServerManager.delete(dir);
                                 }
                                 dir.mkdirs();
-                                FileManager.copy(new File("./Base/temporary/" + server.split("-")[0] + "/" + server + "/"), dir);
-                                System.out.println(Main.getPrefix() + "The template was created successfully!");
+                                File plugins = new File("./Base/templates/" + server.split("-")[0] + "/plugins");
+                                if(!plugins.exists()) {
+                                    plugins.mkdirs();
+                                }
+                                FileManager.copy(new File("./Base/temporary/" + server.split("-")[0] + "/" + server + "/plugins"), plugins);
+                                File toCopy = new File("./Base/temporary/" + server.split("-")[0] + "/" + server + "/");
+                                for(File files : toCopy.listFiles()) {
+                                    if(files.isDirectory()) {
+                                        if(!files.getName().equalsIgnoreCase("plugins") && !files.getName().equalsIgnoreCase("logs")) {
+                                            for(File f : files.listFiles()) {
+                                                if(f.getName().equalsIgnoreCase("uid.dat")) {
+                                                    File world = new File("./Base/templates/" + server.split("-")[0] + "/" + files.getName());
+                                                    if(!world.exists()) {
+                                                        world.mkdirs();
+                                                    }
+                                                    FileManager.copy(files, world);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                System.out.println(Main.getPrefix() + "Template created from group '" + server.split("-")[0] + "'");
                             }
                         }
                     } catch (IOException e) {

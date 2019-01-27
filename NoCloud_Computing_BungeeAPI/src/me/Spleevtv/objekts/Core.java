@@ -214,6 +214,8 @@ public class Core {
                             Main.maxPings = Integer.parseInt(args[1]);
                             Main.pingsLast5Minutes = Integer.parseInt(args[2]);
                             Main.registeredPlayers = Integer.parseInt(args[3]);
+                            Main.cloudstarttime = Long.parseLong(args[4]);
+                            Main.basesize = Integer.parseInt(args[5]);
                         }
                     }
                 } catch (IOException e) {

@@ -46,8 +46,11 @@ public class NoCloudCMD extends Command {
                         sender.sendMessage(Main.prefix + "§aRegistered players§7: §e" + Main.registeredPlayers);
                         sender.sendMessage(Main.prefix + "§aPings (all time)§7: §e" + Main.maxPings);
                         sender.sendMessage(Main.prefix + "§aPings (last 5 minutes)§7: §e" + Main.pingsLast5Minutes);
+                        sender.sendMessage(Main.prefix + "§aAvailable bases§7: §e" + Main.basesize);
+                        Double time = round((double) (System.currentTimeMillis() - Main.cloudstarttime) /1000);
+                        sender.sendMessage(Main.prefix + "§aUptime (in seconds)§7: §e" + time);
                     }
-                }, 2, TimeUnit.SECONDS);
+                }, 1, TimeUnit.SECONDS);
             } else {
                 sender.sendMessage(getHelpMap());
                 return;
@@ -116,5 +119,13 @@ public class NoCloudCMD extends Command {
         }
         ret = ret.replaceAll("hjkhjbmqwve\n", "");
         return ret;
+    }
+    public static double round(double betrag) {
+        double round = Math.round(betrag*10000);
+        round = round / 10000;
+        round = Math.round(round*1000);
+        round = round / 1000;
+        round = Math.round(round*100);
+        return round / 100;
     }
 }
