@@ -50,7 +50,7 @@ public class FileManager {
         whitelist = new Whitelist(whitelist_file);
         loadWhitelist(whitelist_file);
         updateConfig();
-        File cache = new File("./Core/Cache.json");
+        File cache = new File("./Core/cache.json");
         if(!cache.exists()) {
             try {
                 cache.createNewFile();
@@ -96,7 +96,7 @@ public class FileManager {
         }
     }
     public static void updateConfig() {
-        File bungee_config = new File("./Core/BungeeCord_Config.json");
+        File bungee_config = new File("./Core/config.json");
         if(!bungee_config.exists()) {
             try {
                 bungee_config.createNewFile();
@@ -135,12 +135,12 @@ public class FileManager {
                 JsonObject json = gson.fromJson(new FileReader(bungee_config), JsonObject.class);
                 ArrayList<String> m_messages = new ArrayList<String>();
                 JsonArray messages = json.get("maintenanceMessage").getAsJsonArray();
-                for(int i = 1; i < messages.size(); i++) {
+                for(int i = 0; i < messages.size(); i++) {
                     m_messages.add(messages.get(i).getAsString());
                 }
                 ArrayList<String> full_messages = new ArrayList<String>();
                 JsonArray fullmessages = json.get("serverIsFullMessage").getAsJsonArray();
-                for(int b = 1; b < fullmessages.size(); b++) {
+                for(int b = 0; b < fullmessages.size(); b++) {
                     full_messages.add(fullmessages.get(b).getAsString());
                 }
                 Init.bungee_template = new BungeeTemplate(json.get("motd-1").getAsString(), json.get("motd-2").getAsString(), json.get("maintenanceMotd-1").getAsString(), json.get("maintenanceMotd-2").getAsString(), json.get("maxPlayers").getAsNumber().intValue(), json.get("maintenance").getAsBoolean(), json.get("fallbackGroup").getAsString(), messages.size(), m_messages, fullmessages.size(), full_messages, json.get("fallbackPercentToStartServer").getAsNumber().intValue());
@@ -150,7 +150,7 @@ public class FileManager {
         }
     }
     public static void resetConfig() {
-        File bungee_config = new File("./Core/BungeeCord_Config.yml");
+        File bungee_config = new File("./Core/config.json");
         if(bungee_config.exists()) {
             bungee_config.delete();
         }

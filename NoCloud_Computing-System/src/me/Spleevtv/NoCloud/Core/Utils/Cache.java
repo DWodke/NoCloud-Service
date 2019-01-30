@@ -13,7 +13,7 @@ public class Cache {
 
     public Cache() {
         try {
-            File cache = new File("./Core/Cache.json");
+            File cache = new File("./Core/cache.json");
             Gson gson = new Gson();
             JsonObject json = gson.fromJson(new FileReader(cache), JsonObject.class);
             this.bungeeCords = json.get("proxys").getAsNumber().intValue();
@@ -30,7 +30,7 @@ public class Cache {
     }
     public void editBungeeCords(int cords) {
         try {
-            File cache = new File("./Core/Cache.json");
+            File cache = new File("./Core/cache.json");
             if(cache.exists()) {
                 cache.delete();
             }
@@ -48,7 +48,7 @@ public class Cache {
     }
     public void editProxyConnectionPorts(int p) {
         try {
-            File cache = new File("./Core/Cache.json");
+            File cache = new File("./Core/cache.json");
             if(cache.exists()) {
                 cache.delete();
             }
