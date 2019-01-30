@@ -1,15 +1,18 @@
 package me.Spleevtv.NoCloud.Core.Utils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
 import me.Spleevtv.NoCloud.Core.Init;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class FileManager {
 
     public static Config baseconfig;
-    public static Config bungeeconfig;
     public static Whitelist whitelist;
 
     public static void loadAllFiles() {
@@ -47,18 +50,17 @@ public class FileManager {
         whitelist = new Whitelist(whitelist_file);
         loadWhitelist(whitelist_file);
         updateConfig();
-        File cache = new File("./Core/Cache.yml");
+        File cache = new File("./Core/Cache.json");
         if(!cache.exists()) {
             try {
                 cache.createNewFile();
-                Config cfg = new Config(cache);
-                cfg.load();
-                cfg.set("BungeeCords", "0");
-                cfg.set("Spigot_Ports", "45000");
-                cfg.set("BungeeCord_Ports", "25565");
-                cfg.set("ProxyConnectPort", "13888");
-                cfg.save();
-                cfg.unload();
+                OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(cache), "UTF-8");
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                JsonObject json = new JsonObject();
+                json.addProperty("proxys", 0);
+                json.addProperty("proxySocketStartPort", 13888);
+                writer.write(gson.toJson(json));
+                writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -94,56 +96,57 @@ public class FileManager {
         }
     }
     public static void updateConfig() {
-        File bungee_config = new File("./Core/BungeeCord_Config.yml");
+        File bungee_config = new File("./Core/BungeeCord_Config.json");
         if(!bungee_config.exists()) {
             try {
                 bungee_config.createNewFile();
-                bungeeconfig = new Config(bungee_config);
-                bungeeconfig.load();
-                bungeeconfig.set("motd_1", "&b&lNoCloud &7× &fMinecraft cloud-system.");
-                bungeeconfig.set("motd_2", "&fProgrammed by:&b&l Dominik W.");
-                bungeeconfig.set("maintenance_motd_1", "&b&lNoCloud &7× &fMinecraft cloud-system.");
-                bungeeconfig.set("maintenance_motd_2", "&fMaintenance | by Dominik W.");
-                bungeeconfig.set("maintenance", "false");
-                bungeeconfig.set("maintenance_message_amount", "1");
-                bungeeconfig.set("maintenance_message_1", "&cThe network is in the maintenance-mode!");
-                bungeeconfig.set("server_is_full_message_amount", "2");
-                bungeeconfig.set("server_is_full_message_1", "&cThe network is currently full!");
-                bungeeconfig.set("server_is_full_message_2", "&cPls join the network again.");
-                bungeeconfig.set("maxplayers", "50");
-                bungeeconfig.set("fallbackServerGroup", "Lobby");
-                bungeeconfig.set("fallbackServerUntilANewServerStartPercent", "50");
-                bungeeconfig.save();
-                bungeeconfig.unload();
+                OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(bungee_config), "UTF-8");
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                JsonObject json = new JsonObject();
+                json.addProperty("motd-1", "&b&lNoCloud &7× &fMinecraft cloud-system.");
+                json.addProperty("motd-2", "&fProgrammed by:&b&l Dominik W.");
+                json.addProperty("maintenanceMotd-1", "&b&lNoCloud &7× &fMinecraft cloud-system.");
+                json.addProperty("maintenanceMotd-2", "&fMaintenance | by Dominik W.");
+                json.addProperty("maintenance", true);
+                JsonArray maintenanceMessage = new JsonArray();
+                maintenanceMessage.add("&cThe network is in the maintenance-mode!");
+                json.add("maintenanceMessage", maintenanceMessage);
+                JsonArray serverIsFullMessage = new JsonArray();
+                serverIsFullMessage.add("&cThe network is currently full!");
+                serverIsFullMessage.add("&cPls join the network again.");
+                json.add("serverIsFullMessage", serverIsFullMessage);
+                json.addProperty("maxPlayers", 50);
+                json.addProperty("fallbackGroup", "Lobby");
+                json.addProperty("fallbackPercentToStartServer", 50);
+                writer.write(gson.toJson(json));
+                writer.close();
                 ArrayList<String> m_messages = new ArrayList<String>();
                 m_messages.add("&cThe network is in the maintenance-mode!");
                 ArrayList<String> full_messages = new ArrayList<String>();
                 full_messages.add("&cThe network is currently full!");
                 full_messages.add("&cPls join the network again.");
                 Init.bungee_template = new BungeeTemplate("&b&lNoCloud &7× &fMinecraft cloud-system.", "&fCode by:&b&l SPLEEVTV | Dominik W.", "&b&lNoCloud &7× &fMinecraft cloud-system.", "&fMaintenance | by Dominik W.", 50, false, "Lobby", 1, m_messages, 2, full_messages, 50);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            bungeeconfig = new Config(bungee_config);
-            bungeeconfig.load();
-            int i = bungeeconfig.getInt("maintenance_message_amount");
-            ArrayList<String> m_messages = new ArrayList<String>();
-            for(int b = 0; b < i; b++) {
-                m_messages.add(bungeeconfig.get("maintenance_message_" + (b +1)));
-            }
-            int full_i = bungeeconfig.getInt("server_is_full_message_amount");
-            ArrayList<String> full_messages = new ArrayList<String>();
-            for(int b = 0; b < full_i; b++) {
-                String message = bungeeconfig.get("server_is_full_message_" + (b +1));
-                if(message.equalsIgnoreCase(null)) {
-                    full_messages.add(" ");
-                } else {
-                    full_messages.add(message);
+            try {
+                Gson gson = new Gson();
+                JsonObject json = gson.fromJson(new FileReader(bungee_config), JsonObject.class);
+                ArrayList<String> m_messages = new ArrayList<String>();
+                JsonArray messages = json.get("maintenanceMessage").getAsJsonArray();
+                for(int i = 1; i < messages.size(); i++) {
+                    m_messages.add(messages.get(i).getAsString());
                 }
+                ArrayList<String> full_messages = new ArrayList<String>();
+                JsonArray fullmessages = json.get("serverIsFullMessage").getAsJsonArray();
+                for(int b = 1; b < fullmessages.size(); b++) {
+                    full_messages.add(fullmessages.get(b).getAsString());
+                }
+                Init.bungee_template = new BungeeTemplate(json.get("motd-1").getAsString(), json.get("motd-2").getAsString(), json.get("maintenanceMotd-1").getAsString(), json.get("maintenanceMotd-2").getAsString(), json.get("maxPlayers").getAsNumber().intValue(), json.get("maintenance").getAsBoolean(), json.get("fallbackGroup").getAsString(), messages.size(), m_messages, fullmessages.size(), full_messages, json.get("fallbackPercentToStartServer").getAsNumber().intValue());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            Init.bungee_template = new BungeeTemplate(bungeeconfig.get("motd_1"), bungeeconfig.get("motd_2"), bungeeconfig.get("maintenance_motd_1"), bungeeconfig.get("maintenance_motd_2"), bungeeconfig.getInt("maxplayers"), Boolean.parseBoolean(bungeeconfig.get("maintenance")), bungeeconfig.get("fallbackServerGroup"), i, m_messages, full_i, full_messages, bungeeconfig.getInt("fallbackServerUntilANewServerStartPercent"));
-            bungeeconfig.unload();
         }
     }
     public static void resetConfig() {

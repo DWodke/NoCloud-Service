@@ -1,5 +1,7 @@
 package me.Spleevtv.NoCloud.Core.Utils;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import me.Spleevtv.NoCloud.Core.Init;
 import me.Spleevtv.NoCloud.Main;
 
@@ -127,7 +129,6 @@ public class BungeeCord {
                                 String host = args[1];
                                 Init.playerstats.addPing(host);
                             } else if(line.startsWith("GETSTATS")) {
-                                String[] args = line.split(" ");
                                 sendTheProxyAMessage("STATSUPDATE " + Init.playerstats.getMaxPings() + " " + Init.playerstats.getPingsFromLast5min() + " " + Init.playerstats.getRegisteredPlayerSize() + " " + Init.starttime + " " + Init.baselist.getBaselist().size());
                             } else if(line.startsWith("RESTARTSERVER")) {
                                 String[] args = line.split(" ");
@@ -216,11 +217,16 @@ public class BungeeCord {
                                 String[] args = line.split(" ");
                                 Boolean value = Boolean.parseBoolean(args[1]);
                                 File bungee_config = new File("./Core/BungeeCord_Config.yml");
-                                Config bungeeconfig = new Config(bungee_config);
-                                bungeeconfig.load();
-                                bungeeconfig.set("maintenance", value + "");
-                                bungeeconfig.save();
-                                bungeeconfig.unload();
+                                if(bungee_config.exists()) {
+                                    bungee_config.delete();
+                                }
+                                bungee_config.createNewFile();
+                                OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(bungee_config), "UTF-8");
+                                Gson gson = new Gson();
+                                JsonObject json = gson.fromJson(new FileReader(bungee_config), JsonObject.class);
+                                json.remove("maintenance");
+                                json.addProperty("maintenance", value);
+                                writer.write(gson.toJson(json));
                                 FileManager.updateConfig();
                                 pushConfigs();
                             }
