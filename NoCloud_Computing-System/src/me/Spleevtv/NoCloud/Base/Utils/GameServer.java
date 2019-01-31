@@ -91,6 +91,15 @@ public class GameServer {
             } else {
                 if(folder.exists()) {
                     this.setSpigotJar();
+                    try {
+                        File template = new File("./Base/templates/" + "Global" + "/");
+                        if(!template.exists()) {
+                            template.mkdirs();
+                        }
+                        copyFilesInDirectory(template, new File("./Base/temporary/" + this.group.getName() + "/" + this.name + "/"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     ProcessBuilder pb = new ProcessBuilder();
                     pb.directory(folder);
                     pb.command("java", "-jar", "-Xms" + this.maxram + "M", "-Xmx" + this.maxram + "M", "-jar", "spigot.jar");
@@ -103,6 +112,15 @@ public class GameServer {
                 } else {
                     folder.mkdirs();
                     this.resetServerProperties();
+                    try {
+                        File template = new File("./Base/templates/" + "Global" + "/");
+                        if(!template.exists()) {
+                            template.mkdirs();
+                        }
+                        copyFilesInDirectory(template, new File("./Base/temporary/" + this.group.getName() + "/" + this.name + "/"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     this.setSpigotJar();
                     ProcessBuilder pb = new ProcessBuilder();
                     pb.directory(folder);

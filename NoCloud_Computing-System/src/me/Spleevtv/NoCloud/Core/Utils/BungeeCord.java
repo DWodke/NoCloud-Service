@@ -1,6 +1,7 @@
 package me.Spleevtv.NoCloud.Core.Utils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import me.Spleevtv.NoCloud.Core.Init;
 import me.Spleevtv.NoCloud.Main;
@@ -216,17 +217,19 @@ public class BungeeCord {
                             } else if(line.startsWith("MAINTENANCE")) {
                                 String[] args = line.split(" ");
                                 Boolean value = Boolean.parseBoolean(args[1]);
-                                File bungee_config = new File("./Core/BungeeCord_Config.yml");
+                                File bungee_config = new File("./Core/config.json");
+                                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                                JsonObject json = gson.fromJson(new FileReader(bungee_config), JsonObject.class);
+                                json.remove("maintenance");
+                                json.addProperty("maintenance", value);
                                 if(bungee_config.exists()) {
                                     bungee_config.delete();
                                 }
                                 bungee_config.createNewFile();
                                 OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(bungee_config), "UTF-8");
-                                Gson gson = new Gson();
-                                JsonObject json = gson.fromJson(new FileReader(bungee_config), JsonObject.class);
-                                json.remove("maintenance");
-                                json.addProperty("maintenance", value);
                                 writer.write(gson.toJson(json));
+                                writer.flush();
+                                writer.close();
                                 FileManager.updateConfig();
                                 pushConfigs();
                             }

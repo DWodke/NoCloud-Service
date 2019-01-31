@@ -12,7 +12,7 @@ import java.io.IOException;
 public class Exit_CMD implements Command {
     @Override
     public void execute(String[] args) {
-        if(args[0].equalsIgnoreCase("help")) {
+        if(args[0].equalsIgnoreCase("exit")) {
             if(args.length == 1) {
                 for(int i = 0; i < 200; i++) {
                     System.out.println(" ");
