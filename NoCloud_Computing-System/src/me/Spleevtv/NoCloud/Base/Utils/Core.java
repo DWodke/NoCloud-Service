@@ -258,6 +258,20 @@ public class Core {
                                 } else if(value.equalsIgnoreCase("dynamic")) {
                                     Init.game_groups.get(group).editDynamic(Boolean.parseBoolean(arg));
                                 }
+                            } else if(line.startsWith("RESTARTCLOUD")) {
+                                File cache = new File("cachekey.yml");
+                                cache.createNewFile();
+                                Config cfg = new Config(cache);
+                                cfg.load();
+                                cfg.set("key", "Base");
+                                cfg.save();
+                                cfg.unload();
+                                try {
+                                    Thread.sleep(3000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                System.exit(0);
                             } else if(line.startsWith("COPYDIR")) {
                                 String[] args = line.split(" ");
                                 String server = args[1];

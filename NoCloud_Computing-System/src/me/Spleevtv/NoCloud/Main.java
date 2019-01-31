@@ -40,6 +40,21 @@ public class Main {
         System.out.println(getPrefix() + ANSI_GREEN + "Core" + ANSI_RESET + ": " + ANSI_YELLOW + "1" + ANSI_RESET);
         System.out.println(getPrefix() + ANSI_GREEN + "Base" + ANSI_RESET + ": " + ANSI_YELLOW + "2" + ANSI_RESET);
                 try {
+                    File cache = new File("cachekey.yml");
+                    if(cache.exists()) {
+                        Config cfg = new Config(cache);
+                        cfg.load();
+                        if(cfg.get("key").equalsIgnoreCase("Core")) {
+                            cache.delete();
+                            System.out.println(getPrefix() + "Core is loading...");
+                            me.Spleevtv.NoCloud.Core.Init.startCore();
+                        } else {
+                            cache.delete();
+                            System.out.println(getPrefix() + "Base is loading...");
+                            Init.startBase();
+                        }
+                        return;
+                    }
                     String line;
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                     while((line = reader.readLine()) != null) {

@@ -11,23 +11,30 @@ import java.util.HashMap;
 
 public class Init {
 
-    public static ArrayList<Command> commands = new ArrayList<Command>();
+    public static ArrayList<Command> commands;
     public static BaseList baselist;
     public static BungeeTemplate bungee_template;
     public static Cache cache;
-    public static ArrayList<BungeeCord> proxys = new ArrayList<>();
-    public static HashMap<String, String[]> online_servers = new HashMap<String, String[]>();
+    public static ArrayList<BungeeCord> proxys;
+    public static HashMap<String, String[]> online_servers;
     public static CloudPlayers players;
-    public static HashMap<String, GameServer> gameserver = new HashMap<String, GameServer>();
-    public static HashMap<String, ServerGroup> groups = new HashMap<String, ServerGroup>();
+    public static HashMap<String, GameServer> gameserver;
+    public static HashMap<String, ServerGroup> groups;
     public static Integer addedfallbackserver;
-    public static HashMap<String, Integer> latestplayer = new HashMap<String, Integer>();
+    public static HashMap<String, Integer> latestplayer;
     public static ServerChannel serverchannel;
     public static PlayerStats playerstats;
     public static Long starttime;
-    public static HashMap<String, Long> time = new HashMap<String, Long>();
+    public static HashMap<String, Long> time;
 
     public static void startCore() {
+        commands = new ArrayList<Command>();
+        proxys = new ArrayList<>();
+        online_servers = new HashMap<String, String[]>();
+        gameserver = new HashMap<String, GameServer>();
+        groups = new HashMap<String, ServerGroup>();
+        latestplayer = new HashMap<String, Integer>();
+        time = new HashMap<String, Long>();
         starttime = System.currentTimeMillis();
         startCommandReading();
         FileManager.loadAllFiles();
@@ -58,6 +65,7 @@ public class Init {
         addCommand(new Listserver_CMD());
         addCommand(new EditGroup_CMD());
         addCommand(new Copy_CMD());
+        addCommand(new Exit_CMD());
         new Thread(new Runnable() {
             @Override
             public void run() {

@@ -11,7 +11,7 @@ public class Help_CMD implements Command {
     public void execute(String[] args) {
      if(args[0].equalsIgnoreCase("help")) {
          if(args.length == 1) {
-             System.out.println(Main.getPrefix() + Main.ANSI_RED + "Available commands" + Main.ANSI_RESET + Main.ANSI_WHITE + ":" + Main.ANSI_RESET);
+             System.out.println(Main.getPrefix() + "Exit cloud system.");
              for(Command cmd : Init.commands) {
                  if(!cmd.getUsage().equalsIgnoreCase(this.getUsage())) {
                      System.out.println(Main.getPrefix() + cmd.getUsage());
