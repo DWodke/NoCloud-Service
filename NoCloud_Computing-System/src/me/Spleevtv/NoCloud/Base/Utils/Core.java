@@ -231,8 +231,16 @@ public class Core {
                             } else if(line.startsWith("RESTARTAUTOSERVER")) {
                                 String[] args = line.split(" ");
                                 String server = args[1];
-                                if(Init.game_servers.get(server) != null) {
-                                    Init.game_servers.get(server).restartServer();
+                                String group = server.split("-")[0];
+                                if(Init.game_groups.get(group).startNextServer()) {
+                                    if(Init.game_servers.get(server) != null) {
+                                        Init.game_servers.get(server).stopServer();
+                                    }
+                                    continue;
+                                } else {
+                                    if(Init.game_servers.get(server) != null) {
+                                        Init.game_servers.get(server).restartServer();
+                                    }
                                 }
                             } else if(line.startsWith("EDITGROUP")) {
                                 String[] args = line.split(" ");

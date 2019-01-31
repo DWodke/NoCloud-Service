@@ -28,25 +28,9 @@ public class Cache {
     public int getProxy_connection_port() {
         return proxy_connection_port;
     }
-    public void editBungeeCords(int cords) {
-        try {
-            File cache = new File("./Core/cache.json");
-            if(cache.exists()) {
-                cache.delete();
-            }
-            cache.createNewFile();
-            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(cache), "UTF-8");
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            JsonObject json = new JsonObject();
-            json.addProperty("proxys", cords);
-            json.addProperty("proxySocketStartPort", this.proxy_connection_port);
-            writer.write(gson.toJson(json));
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    public void editProxyConnectionPorts(int p) {
+    public void editProxyCache(int p, int cords) {
+        this.proxy_connection_port = p;
+        this.bungeeCords = cords;
         try {
             File cache = new File("./Core/cache.json");
             if(cache.exists()) {
@@ -58,6 +42,22 @@ public class Cache {
             JsonObject json = new JsonObject();
             json.addProperty("proxys", this.bungeeCords);
             json.addProperty("proxySocketStartPort", p);
+            writer.write(gson.toJson(json));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            File cache = new File("./Core/cache.json");
+            if(cache.exists()) {
+                cache.delete();
+            }
+            cache.createNewFile();
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(cache), "UTF-8");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonObject json = new JsonObject();
+            json.addProperty("proxys", cords);
+            json.addProperty("proxySocketStartPort", this.proxy_connection_port);
             writer.write(gson.toJson(json));
             writer.close();
         } catch (IOException e) {

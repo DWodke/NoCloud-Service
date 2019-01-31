@@ -39,8 +39,7 @@ public class AddGroup_CMD implements Command {
                                     Init.proxys.add(new BungeeCord(c));
                                     c++;
                                 }
-                                Init.cache.editProxyConnectionPorts(Init.cache.getProxy_connection_port() + servers);
-                                Init.cache.editBungeeCords(Init.cache.getBungeeCords() + servers);
+                                Init.cache.editProxyCache(Init.cache.getProxy_connection_port() + servers, Init.cache.getBungeeCords() + servers);
                                 base.sendTheBaseAMessage("CREATEPROXYGROUP " + groupName + " " + onlineAmount + " " + servers + " " + ram + " " + dinamic + " " + maxPlayers + " " + c_ports);
                                 Base_Servers.addGroupToCache(groupName, base.getName());
                                 System.out.println(Main.getPrefix() + "The base '" + baseName + "' has create the group '" + groupName + "'.");

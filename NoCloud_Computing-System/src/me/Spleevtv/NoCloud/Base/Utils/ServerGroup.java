@@ -1,8 +1,14 @@
 package me.Spleevtv.NoCloud.Base.Utils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import me.Spleevtv.NoCloud.Base.Init;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,46 +54,106 @@ public class ServerGroup {
         return maxplayers;
     }
     public void editMaxRam(int max) {
-        File settings = new File("./Base/groups_settings.yml");
-        Config cfg = new Config(settings);
-        cfg.load();
         this.maxram = max;
-        cfg.set(this.name + ".MaxRam", max + "");
-        cfg.save();
-        cfg.unload();
+        File settings = new File("./Base/GroupSettings/" + this.name + ".json");
+        try {
+            if(settings.exists()) {
+                settings.delete();
+            }
+            settings.createNewFile();
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(settings), "UTF-8");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonObject json = new JsonObject();
+            json.addProperty("name", name);
+            json.addProperty("startPort", startPort);
+            json.addProperty("onlineAmount", onlineamount);
+            json.addProperty("maxAmount", maxamount);
+            json.addProperty("maxPlayers", maxplayers);
+            json.addProperty("maxRam", maxram);
+            json.addProperty("dynamic", haveTemplate);
+            writer.write(gson.toJson(json));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.restartAllServersOutGroup();
     }
     public void editMaxServerValue(int server_value) {
-        File settings = new File("./Base/groups_settings.yml");
-        Config cfg = new Config(settings);
-        cfg.load();
         this.maxamount = server_value;
-        cfg.set(this.name + ".ServerValue", server_value + "");
-        cfg.save();
-        cfg.unload();
+        File settings = new File("./Base/GroupSettings/" + this.name + ".json");
+        try {
+            if(settings.exists()) {
+                settings.delete();
+            }
+            settings.createNewFile();
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(settings), "UTF-8");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonObject json = new JsonObject();
+            json.addProperty("name", name);
+            json.addProperty("startPort", startPort);
+            json.addProperty("onlineAmount", onlineamount);
+            json.addProperty("maxAmount", maxamount);
+            json.addProperty("maxPlayers", maxplayers);
+            json.addProperty("maxRam", maxram);
+            json.addProperty("dynamic", haveTemplate);
+            writer.write(gson.toJson(json));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if(this.getOnlineServer() > this.maxamount) {
             Integer stop = this.getOnlineServer() - this.maxamount;
             this.stopServersOutGroup(stop);
         }
     }
     public void editDynamic(Boolean template) {
-        File settings = new File("./Base/groups_settings.yml");
-        Config cfg = new Config(settings);
-        cfg.load();
+        File settings = new File("./Base/GroupSettings/" + this.name + ".json");
         this.haveTemplate = template;
-        cfg.set(this.name + ".HaveTemplate", template + "");
-        cfg.save();
-        cfg.unload();
+        try {
+            if(settings.exists()) {
+                settings.delete();
+            }
+            settings.createNewFile();
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(settings), "UTF-8");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonObject json = new JsonObject();
+            json.addProperty("name", name);
+            json.addProperty("startPort", startPort);
+            json.addProperty("onlineAmount", onlineamount);
+            json.addProperty("maxAmount", maxamount);
+            json.addProperty("maxPlayers", maxplayers);
+            json.addProperty("maxRam", maxram);
+            json.addProperty("dynamic", haveTemplate);
+            writer.write(gson.toJson(json));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.restartAllServersOutGroup();
     }
     public void editOnlineServerValue(int i) {
-        File settings = new File("./Base/groups_settings.yml");
-        Config cfg = new Config(settings);
-        cfg.load();
         this.onlineamount = i;
-        cfg.set(this.name + ".ServerOnStart", i + "");
-        cfg.save();
-        cfg.unload();
+        File settings = new File("./Base/GroupSettings/" + this.name + ".json");
+        try {
+            if(settings.exists()) {
+                settings.delete();
+            }
+            settings.createNewFile();
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(settings), "UTF-8");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonObject json = new JsonObject();
+            json.addProperty("name", name);
+            json.addProperty("startPort", startPort);
+            json.addProperty("onlineAmount", onlineamount);
+            json.addProperty("maxAmount", maxamount);
+            json.addProperty("maxPlayers", maxplayers);
+            json.addProperty("maxRam", maxram);
+            json.addProperty("dynamic", haveTemplate);
+            writer.write(gson.toJson(json));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if(this.getOnlineServer() < this.onlineamount) {
             this.startAllOnlineAmountServer();
         } else if(this.getOnlineServer() == this.onlineamount) {
@@ -97,14 +163,28 @@ public class ServerGroup {
         }
     }
     public void editMaxPlayers(int max) {
-        File settings = new File("./Base/groups_settings.yml");
-        Config cfg = new Config(settings);
-        cfg.load();
         this.maxplayers = max;
-        cfg.set(this.name + ".MaxPlayers", max + "");
-        cfg.save();
-        cfg.unload();
-        this.restartAllServersOutGroup();
+        File settings = new File("./Base/GroupSettings/" + this.name + ".json");
+        try {
+            if(settings.exists()) {
+                settings.delete();
+            }
+            settings.createNewFile();
+            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(settings), "UTF-8");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonObject json = new JsonObject();
+            json.addProperty("name", name);
+            json.addProperty("startPort", startPort);
+            json.addProperty("onlineAmount", onlineamount);
+            json.addProperty("maxAmount", maxamount);
+            json.addProperty("maxPlayers", maxplayers);
+            json.addProperty("maxRam", maxram);
+            json.addProperty("dynamic", haveTemplate);
+            writer.write(gson.toJson(json));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void startAllServersOutGroup() {
         for(int i = 1; i <= this.maxamount; i++) {
@@ -112,6 +192,16 @@ public class ServerGroup {
             GameServer server = new GameServer(name, ServerProcessManager.getNextFreePort(this.startPort), this, this.maxram, this.haveTemplate, this.maxplayers);
             server.startServer();
         }
+    }
+    public Boolean startNextServer() {
+        for(int i = 1; i <= this.onlineamount; i++) {
+            String name = this.name + "-" + i;
+            if(!Init.game_servers.containsKey(name)) {
+                startServerOutGroup(i);
+                return true;
+            }
+        }
+        return false;
     }
     public void restartAllServersOutGroup() {
         ArrayList<String> ids = new ArrayList<String>();
