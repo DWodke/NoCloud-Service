@@ -1,5 +1,7 @@
 package me.Spleevtv.NoCloud.Base;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import me.Spleevtv.NoCloud.Base.Utils.*;
 import me.Spleevtv.NoCloud.Main;
 import java.io.*;
@@ -44,14 +46,28 @@ public class Init {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(gameserver_list), "UTF-8"));
                 String line;
-                File settings = new File("./Base/groups_settings.yml");
-                Config cfg = new Config(settings);
-                cfg.load();
                 while((line = reader.readLine()) != null) {
-                    core.sendTheCoreAMessage("INITGROUP " + line + " " + cfg.getInt(line + ".ServerOnStart") + " " + cfg.getInt(line + ".ServerValue") + " " + cfg.getInt(line + ".MaxRam") + " " + cfg.getInt(line + ".MaxPlayers") + " " + cfg.get(line + ".HaveTemplate"));
-                    game_groups.put(line, new ServerGroup(line, cfg.getInt(line + ".MaxRam"), Boolean.parseBoolean(cfg.get(line + ".HaveTemplate")), cfg.getInt(line + ".ServerValue"), cfg.getInt(line + ".ServerOnStart"), cfg.getInt(line + ".MaxPlayers"), cfg.getInt(line + ".StartPort")));
+                    File settings = new File("./Base/GroupSettings/" + line + ".json");
+                    if(settings.exists()) {
+                        try {
+                            Gson gson = new Gson();
+                            JsonObject json = gson.fromJson(new FileReader(settings), JsonObject.class);
+                            Integer onlineamount = json.get("onlineAmount").getAsNumber().intValue();
+                            Integer maxamount = json.get("maxAmount").getAsNumber().intValue();
+                            Integer maxram = json.get("maxRam").getAsNumber().intValue();
+                            Integer maxplayers = json.get("maxPlayers").getAsNumber().intValue();
+                            Integer startport = json.get("startPort").getAsNumber().intValue();
+                            Boolean dynamic = json.get("dynamic").getAsBoolean();
+                            core.sendTheCoreAMessage("INITGROUP " + line + " " + onlineamount + " " + maxamount + " " + maxram + " " + maxplayers + " " + dynamic);
+                            game_groups.put(line, new ServerGroup(line, maxram, dynamic, maxamount, onlineamount, maxplayers, startport));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                    }
+                    } else {
+                        System.out.println(Main.getPrefix() + "The group '" + line + "' don't loaded.");
+                        System.out.println(Main.getPrefix() + "Reason: the group file doesn't exists!");
+                    }
                 }
-                cfg.unload();
             } catch (Exception e) {
                 e.printStackTrace();
             }

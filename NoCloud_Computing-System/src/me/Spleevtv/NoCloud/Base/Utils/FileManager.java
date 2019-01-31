@@ -30,13 +30,9 @@ public class FileManager {
         } else {
             baseconfig = new Config(base_config);
         }
-        File settings = new File("./Base/groups_settings.yml");
+        File settings = new File("./Base/GroupSettings/");
         if(!settings.exists()) {
-            try {
-                settings.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            settings.mkdirs();
         }
         File proxy_list = new File("./Base/proxy_list.yml");
         if(!proxy_list.exists()) {
@@ -50,6 +46,14 @@ public class FileManager {
         if(!server_list.exists()) {
             try {
                 server_list.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        File s = new File("./Base/groups_settings.yml");
+        if(!s.exists()) {
+            try {
+                s.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
