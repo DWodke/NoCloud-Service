@@ -61,10 +61,9 @@ public class PlayerStats {
         } else {
             this.players.add(uuid);
             File file = new File("./Core/PlayerCache/uuidcache.yml");
-            if(file.exists()) {
-                file.delete();
-            }
             try {
+                FileWriter filewriter = new FileWriter(file);
+                filewriter.close();
                 BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                 for(String uuids : this.players) {
                     writer.write(uuids);
