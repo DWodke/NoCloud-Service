@@ -117,7 +117,6 @@ public class GetDataListener implements PluginMessageListener {
                 String name = args[0];
                 String base = args[4];
                 String group = name.split("-")[0];
-                if(Main.groups.get(group).getServerOutGroup(name) == null) {
                     Integer op = Integer.parseInt(args[1]);
                     Integer mp = Integer.parseInt(args[2]);
                     String ip = args[5];
@@ -140,7 +139,6 @@ public class GetDataListener implements PluginMessageListener {
                     } else {
                         servergroup.addServer(new GameServer(name, state, op, mp, base, ip, port));
                     }
-                }
             } else if(subchannel.equalsIgnoreCase("RemoveServer")) {
                 String server = stream.readUTF();
                 String group = server.split("-")[0];

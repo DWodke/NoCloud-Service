@@ -32,8 +32,7 @@ public class CloudServerAPI {
         return Main.groups.size();
     }
     public void setState(ServerState state) {
-        GameServer server = this.getServerById(this.getServerName().split("-")[0], Integer.parseInt(this.getServerName().split("-")[1]));
-        server.updateState(state);
+        Main.core.sendMessage("UPDATESTATE " + this.getServerName() + " " + state);
     }
     public String getServerName() {
         return Bukkit.getServer().getServerName();

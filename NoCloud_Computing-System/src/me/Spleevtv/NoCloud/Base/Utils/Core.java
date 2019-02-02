@@ -258,8 +258,14 @@ public class Core {
                                 cfg.set("key", "Base");
                                 cfg.save();
                                 cfg.unload();
+                                for(GameServer server : Init.game_servers.values()) {
+                                    server.stopServer();
+                                }
+                                for(ProxyServer server : Init.proxy_servers.values()) {
+                                    server.stopServer();
+                                }
                                 try {
-                                    Thread.sleep(3000);
+                                    Thread.sleep(5000);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
