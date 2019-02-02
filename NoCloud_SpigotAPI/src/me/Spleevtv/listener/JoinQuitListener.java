@@ -19,11 +19,6 @@ public class JoinQuitListener implements Listener {
     public void handleJoin(PlayerJoinEvent e) {
         try {
             Player p = e.getPlayer();
-            for(ServerGroup group : Main.groups.values()) {
-                for(GameServer server : Main.groups.get(group).getServers().values()) {
-                    p.sendMessage(server.getName());
-                }
-            }
             Main.core.sendMessage("JOINPLAYER " + p.getUniqueId().toString() + " " + NoCloudAPI.getServerAPI().getServerName());
         } catch (Exception e1) {
         }

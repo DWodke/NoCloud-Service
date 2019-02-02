@@ -97,66 +97,70 @@ public class Main extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimerAsynchronously(instance, new Runnable() {
             @Override
             public void run() {
-                for(CloudSign sign : signs.values()) {
-                    if(pushfromsign) {
-                        for(Player all : Bukkit.getOnlinePlayers()) {
-                            if(sign.getLocation().distance(all.getLocation()) <= pushfromsigndistance || sign.getLocation().distance(all.getEyeLocation()) <= pushfromsigndistance) {
-                                all.setVelocity(sign.getLocation().getDirection().multiply(pushfromsignstrength));
+                try {
+                    for(CloudSign sign : signs.values()) {
+                        if(pushfromsign) {
+                            for(Player all : Bukkit.getOnlinePlayers()) {
+                                if(sign.getLocation().distance(all.getLocation()) <= pushfromsigndistance || sign.getLocation().distance(all.getEyeLocation()) <= pushfromsigndistance) {
+                                    all.setVelocity(sign.getLocation().getDirection().multiply(pushfromsignstrength));
+                                }
+                            }
+                        }
+                        if(!sign.getLocation().getChunk().isLoaded()) {
+                            sign.getLocation().getChunk().load();
+                        }
+                        if(sign.getCurrentGroup() == null || sign.getCurrentGroup().getServers().isEmpty()) {
+                            if(sign.getState() != SignTemplateKind.SEARCHING) {
+                                sign.setState(SignTemplateKind.SEARCHING);
+                                sign.updateSign();
+                                continue;
+                            }
+                        }
+                        if(sign.getState() == SignTemplateKind.SEARCHING) {
+                            sign.search();
+                            continue;
+                        }
+                        if(sign.getState() == SignTemplateKind.LOBBY) {
+                            if(templates.get(SignTemplateKind.LOBBY).isHide()) {
+                                sign.search();
+                                continue;
+                            } else {
+                                sign.updateSign();
+                            }
+                        }
+                        if(sign.getState() == SignTemplateKind.INGAME) {
+                            if(templates.get(SignTemplateKind.INGAME).isHide()) {
+                                sign.search();
+                                continue;
+                            } else {
+                                sign.updateSign();
+                            }
+                        }
+                        if(sign.getState() == SignTemplateKind.ONLINE) {
+                            if(templates.get(SignTemplateKind.ONLINE).isHide()) {
+                                sign.search();
+                                continue;
+                            } else {
+                                sign.updateSign();
+                            }
+                        }
+                        if(sign.getState() == SignTemplateKind.ENDING) {
+                            if(templates.get(SignTemplateKind.ENDING).isHide()) {
+                                sign.search();
+                                continue;
+                            } else {
+                                sign.updateSign();
                             }
                         }
                     }
-                    if(!sign.getLocation().getChunk().isLoaded()) {
-                        sign.getLocation().getChunk().load();
-                    }
-                    if(sign.getCurrentGroup() == null || sign.getCurrentGroup().getServers().isEmpty()) {
-                        if(sign.getState() != SignTemplateKind.SEARCHING) {
-                            sign.setState(SignTemplateKind.SEARCHING);
-                            sign.updateSign();
-                            continue;
-                        }
-                    }
-                    if(sign.getState() == SignTemplateKind.SEARCHING) {
-                        sign.search();
-                        continue;
-                    }
-                    if(sign.getState() == SignTemplateKind.LOBBY) {
-                        if(templates.get(SignTemplateKind.LOBBY).isHide()) {
-                            sign.search();
-                            continue;
-                        } else {
-                            sign.updateSign();
-                        }
-                    }
-                    if(sign.getState() == SignTemplateKind.INGAME) {
-                        if(templates.get(SignTemplateKind.INGAME).isHide()) {
-                            sign.search();
-                            continue;
-                        } else {
-                            sign.updateSign();
-                        }
-                    }
-                    if(sign.getState() == SignTemplateKind.ONLINE) {
-                        if(templates.get(SignTemplateKind.ONLINE).isHide()) {
-                            sign.search();
-                            continue;
-                        } else {
-                            sign.updateSign();
-                        }
-                    }
-                    if(sign.getState() == SignTemplateKind.ENDING) {
-                        if(templates.get(SignTemplateKind.ENDING).isHide()) {
-                            sign.search();
-                            continue;
-                        } else {
-                            sign.updateSign();
-                        }
-                    }
+                } catch (Exception e) {
                 }
             }
         }, 20, updatespeed);
         Bukkit.getScheduler().runTaskTimerAsynchronously(instance, new Runnable() {
             @Override
             public void run() {
+            try {
                 for(SignTemplateKind kind : SignTemplateKind.values()) {
                     if(templates.get(kind).isAnimation()) {
                         templates.get(kind).addCurrentUpdateInt(0);
@@ -209,6 +213,8 @@ public class Main extends JavaPlugin {
                         }
                     }
                 }
+            } catch (Exception e) {
+            }
             }
         }, 40, animationspeed);
     }

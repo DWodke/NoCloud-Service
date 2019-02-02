@@ -47,7 +47,6 @@ public class GameServer {
     }
     public void updateState(ServerState arg0) {
         this.state = arg0;
-        Main.core.sendMessage("UPDATESTATE " + this.name + " " + state);
     }
     public Integer getPort() {
         return port;
