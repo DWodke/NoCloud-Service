@@ -258,9 +258,22 @@ public class ProxyServer {
                 writer.write("Header: ''");
                 writer.newLine();
                 writer.write("Footer: ''");
+                writer.newLine();
+                writer.newLine();
+                writer.newLine();
+                writer.write("# This is the maintenance player join message.");
+                writer.newLine();
+                writer.write("# You can put it on or off (true or false).");
+                writer.newLine();
+                writer.write("# %player% = currentPlayer | %prefix% = prefix of the system");
+                writer.newLine();
+                writer.write("MaintenanceMessageAllow: true");
+                writer.newLine();
+                writer.write("MaintenanceMessage: '%prefix%&7The player &6%player% &7has tried to connect to the network.'");
                 writer.flush();
                 writer.close();
                 writer.close();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

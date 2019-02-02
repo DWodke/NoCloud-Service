@@ -99,8 +99,9 @@ public class NoCloudCMD extends Command {
                     sender.sendMessage(Main.message);
                 } else if(subvalue.equalsIgnoreCase("list")) {
                     sender.sendMessage(Main.prefix + "§cWhitelist users§8:");
-                    for(String name : Main.whitelist) {
-                        sender.sendMessage(Main.prefix + "§8- §a" + name);
+                    for(String uuid : Main.whitelist.keySet()) {
+                        String name = Main.whitelist.get(uuid);
+                        sender.sendMessage(Main.prefix + "§8- §a" + name + " §f(§6" + uuid + "§f)");
                     }
                 } else {
                     sender.sendMessage(getHelpMap());

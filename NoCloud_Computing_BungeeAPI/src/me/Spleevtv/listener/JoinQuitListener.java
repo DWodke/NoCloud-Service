@@ -32,10 +32,11 @@ public class JoinQuitListener implements Listener {
                 e.setTarget(fallback);
                 Boolean disconnect = false;
                 if(Main.maintenance) {
-                    if(!Main.whitelist.contains(p.getName().toLowerCase())) {
+                    if(!Main.whitelist.containsKey(p.getUniqueId().toString())) {
                         e.setCancelled(true);
                         p.disconnect(new TextComponent(Main.maintenance_message));
                         disconnect = true;
+                        Main.core.sendToTheCoreAMessage("JOINMAINTENANCE " + p.getName());
                     }
                 }
                 if(!disconnect) {

@@ -232,6 +232,10 @@ public class BungeeCord {
                                 writer.close();
                                 FileManager.updateConfig();
                                 pushConfigs();
+                            } else if(line.startsWith("JOINMAINTENANCE")) {
+                                for(BungeeCord proxy : Init.proxys) {
+                                    proxy.sendTheProxyAMessage(line);
+                                }
                             }
                         } else {
                             if(r.read() == -1) {

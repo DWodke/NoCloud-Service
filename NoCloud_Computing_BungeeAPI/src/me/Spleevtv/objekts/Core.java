@@ -179,10 +179,12 @@ public class Core {
                             String[] users = args[1].split(",");
                             Main.whitelist.clear();
                             for(String u : users) {
-                                Main.whitelist.add(u.toLowerCase());
+                                String name = u.split(";")[0];
+                                String uuid = u.split(";")[1];
+                                Main.whitelist.put(uuid, name);
                             }
                             for(ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
-                                if(!Main.whitelist.contains(all.getName().toLowerCase())) {
+                                if(!Main.whitelist.containsKey(all.getUniqueId().toString())) {
                                     all.disconnect(Main.maintenance_message);
                                 }
                             }
@@ -216,6 +218,15 @@ public class Core {
                             Main.registeredPlayers = Integer.parseInt(args[3]);
                             Main.cloudstarttime = Long.parseLong(args[4]);
                             Main.basesize = Integer.parseInt(args[5]);
+                        } else if(line.startsWith("JOINMAINTENANCE")) {
+                            String[] args = line.split(" ");
+                            if(Main.playerjoinmaintenanceallow) {
+                                for(ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
+                                    if(all.hasPermission("cloud.use")) {
+                                        all.sendMessage(Main.playerjoinmaintenance.replaceAll("%player%", args[1]));
+                                    }
+                                }
+                            }
                         }
                     }
                 } catch (IOException e) {

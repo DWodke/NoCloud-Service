@@ -56,7 +56,7 @@ public class Main extends Plugin {
     public static int maintenance_messsage_amount;
     public static String maintenance_message;
     public static String full_message;
-    public static ArrayList<String> whitelist = new ArrayList<String>();
+    public static HashMap<String, String> whitelist = new HashMap<String, String>();
     public static HashMap<String, ServerGroup> groups = new HashMap<String, ServerGroup>();
     public static Boolean usehubcmd;
     public static String hubmessage;
@@ -69,6 +69,8 @@ public class Main extends Plugin {
     public static Integer pingsLast5Minutes = 0;
     public static Long cloudstarttime;
     public static Integer basesize;
+    public static String playerjoinmaintenance;
+    public static Boolean playerjoinmaintenanceallow;
 
     @Override
     public void onEnable() {
@@ -158,6 +160,8 @@ public class Main extends Plugin {
             alreadyonhub = cfg.getString("AllReadyOnFallback");
             tabfooter = cfg.getString("Footer").replaceAll("%split%", "\n").replaceAll("&", "§");
             tabheader = cfg.getString("Header").replaceAll("%split%", "\n").replaceAll("&", "§");
+            playerjoinmaintenanceallow = cfg.getBoolean("MaintenanceMessageAllow");
+            playerjoinmaintenance = cfg.getString("MaintenanceMessage").replaceAll("&", "§").replaceAll("%prefix%", prefix);
             maintenanceactiondescription.clear();
             for(int i = 0; i < args1.length; i++) {
                 maintenanceactiondescription.add(args1[i]);
