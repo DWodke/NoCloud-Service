@@ -61,12 +61,12 @@ public class ServerInfos {
         } catch(Exception e) {
         }
     }
-    public static void removeServer(GameServer server, ServerInfo info) {
+    public static void removeServer(String server, ServerInfo info) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         DataOutputStream out = new DataOutputStream(stream);
         try {
             out.writeUTF("RemoveServer");
-            out.writeUTF(server.getName());
+            out.writeUTF(server);
         } catch(Exception e) {
         }
         info.sendData("NoCloud", stream.toByteArray());

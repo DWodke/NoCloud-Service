@@ -116,11 +116,13 @@ public class Core {
                             String server = args[1];
                             String group = server.split("-")[0];
                             ServerGroup servergroup = Main.groups.get(group);
-                            for(ServerInfo infos : ProxyServer.getInstance().getServers().values()) {
-                                ServerInfos.removeServer(servergroup.getServers().get(server), infos);
+                            if(servergroup != null && servergroup.getServers().get(server) != null) {
+                                for(ServerInfo infos : ProxyServer.getInstance().getServers().values()) {
+                                    ServerInfos.removeServer(server, infos);
+                                }
+                                servergroup.removeServer(server);
                             }
-                            servergroup.removeServer(server);
-                            ServerInfo i = ProxyServer.getInstance().getServers().remove(server);
+                            ProxyServer.getInstance().getServers().remove(server);
                             for(ProxiedPlayer all : ProxyServer.getInstance().getPlayers()) {
                                 if(all.hasPermission("cloud.use")) {
                                     all.sendMessage(Main.stopp_message.replaceAll("%server%", server));

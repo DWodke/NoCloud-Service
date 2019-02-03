@@ -156,6 +156,13 @@ public class GetDataListener implements PluginMessageListener {
                     return;
                 }
                 servergroup.removeServer(server);
+                for(CloudSign sign : Main.signs.values()) {
+                    if(sign.getCurrentServer() == servergroup.getServerOutGroup(server)) {
+                        servergroup.removeServer(server);
+                        sign.search();
+                        return;
+                    }
+                }
             }
         } catch (Exception e1) {
         }

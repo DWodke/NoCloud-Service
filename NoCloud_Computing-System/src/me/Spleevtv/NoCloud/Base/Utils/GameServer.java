@@ -152,7 +152,6 @@ public class GameServer {
                 @Override
                 public void run() {
                     Init.core.sendTheCoreAMessage("STOPSPIGOTSERVER " + name);
-                    process.destroy();
                     process.destroyForcibly();
                     process = null;
                     Init.game_servers.remove(name);
@@ -202,7 +201,7 @@ public class GameServer {
             scheduler.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
-                    process.destroy();
+                    process.destroyForcibly();
                     process = null;
                     startServer();
                     scheduler.shutdown();

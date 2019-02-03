@@ -119,7 +119,7 @@ public class ProxyServer {
             scheduler.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
-                    process.destroy();
+                    process.destroyForcibly();
                     process = null;
                     Init.proxy_servers.remove(name);
                     isStarted = false;
@@ -140,7 +140,7 @@ public class ProxyServer {
             scheduler.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
-                    process.destroy();
+                    process.destroyForcibly();
                     process = null;
                     startServer();
                     scheduler.shutdown();

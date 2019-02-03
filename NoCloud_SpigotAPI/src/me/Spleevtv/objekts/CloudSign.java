@@ -111,6 +111,7 @@ public class CloudSign {
             if(group != null) {
                 this.currentgroup = group;
                 this.state = SignTemplateKind.SEARCHING;
+                updateSign();
             } else {
                 this.curentserver = null;
                 this.state = SignTemplateKind.SEARCHING;
@@ -128,9 +129,10 @@ public class CloudSign {
            if(Main.usedserver.contains(this.curentserver)) {
                Main.usedserver.remove(this.curentserver);
            }
+           this.curentserver = null;
             Integer i = 1;
             for(GameServer server : this.currentgroup.getServers().values()) {
-                if(server != this.curentserver || server != null) {
+                if(server != null) {
                     if(!Main.usedserver.contains(server)) {
                         if(!Main.templates.get(SignTemplateKind.INGAME).isHide()) {
                             if(server.getState() == ServerState.INGAME) {
@@ -186,7 +188,7 @@ public class CloudSign {
         } else {
             Integer i = 1;
             for(GameServer server : this.currentgroup.getServers().values()) {
-                if(server != this.curentserver) {
+                if(server != null) {
                     if(!Main.usedserver.contains(server)) {
                         if(!Main.templates.get(SignTemplateKind.INGAME).isHide()) {
                             if(server.getState() == ServerState.INGAME) {
