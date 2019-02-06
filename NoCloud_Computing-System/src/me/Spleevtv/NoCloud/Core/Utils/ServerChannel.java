@@ -66,7 +66,7 @@ public class ServerChannel {
                                 if(Init.gameserver.containsKey(args[1])) {
                                     Init.gameserver.remove(args[1]);
                                 }
-                                Init.baselist.getBaselist().get(Init.gameserver.get(args[1]).getCurrentbase().getName()).sendTheBaseAMessage("UNREGISTERGAMESERVER " + args[1]);
+                                Init.baselist.getBaselist().get(Base_Servers.getBase(args[1].split("-")[0])).sendTheBaseAMessage("UNREGISTERGAMESERVER " + args[1]);
                             }
                         } else if(message.startsWith("UPDATESTATE")) {
                             String[] args = message.split(" ");
