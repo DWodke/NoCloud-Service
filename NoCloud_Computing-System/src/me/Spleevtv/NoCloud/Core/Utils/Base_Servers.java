@@ -14,8 +14,8 @@ public class Base_Servers {
         if(cfg.get(group) == null) {
             cfg.set(group, base);
             cfg.save();
-            cache.put(group, base);
         }
+        cache.put(group, base);
         cfg.unload();
     }
     public static void removeGroupOutCache(String group) {
@@ -46,5 +46,4 @@ public class Base_Servers {
         }
         return null;
     }
-
 }
