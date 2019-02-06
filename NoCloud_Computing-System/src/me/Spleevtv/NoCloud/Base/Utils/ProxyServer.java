@@ -47,10 +47,6 @@ public class ProxyServer {
                        ProxyServer server = Init.proxy_warteschlange.get(0);
                        server.startServer();
                        Init.proxy_warteschlange.remove(server);
-                    } else if(!Init.server_warteschlange.isEmpty()) {
-                        GameServer server = Init.server_warteschlange.get(0);
-                        server.startServer();
-                        Init.server_warteschlange.remove(server);
                     }
                     scheduler.shutdown();
                 }

@@ -55,6 +55,7 @@ public class ServerChannel {
                                         + " " + server.getSize()
                                         + " " + server.getState());
                             }
+                            Init.baselist.getBaselist().get(server.getCurrentbase().getName()).sendTheBaseAMessage("REGISTERGAMESERVER " + server.getServername());
                         } else if(message.startsWith("UNREGISTERSERVER")) {
                             String[] args = message.split(" ");
                             if(Init.gameserver.get(args[1]) != null) {
@@ -65,6 +66,7 @@ public class ServerChannel {
                                 if(Init.gameserver.containsKey(args[1])) {
                                     Init.gameserver.remove(args[1]);
                                 }
+                                Init.baselist.getBaselist().get(Init.gameserver.get(args[1]).getCurrentbase().getName()).sendTheBaseAMessage("UNREGISTERGAMESERVER " + args[1]);
                             }
                         } else if(message.startsWith("UPDATESTATE")) {
                             String[] args = message.split(" ");
@@ -103,9 +105,11 @@ public class ServerChannel {
                             String uuid = args[1];
                             String server = args[2];
                             GameServer gameserver = Init.gameserver.get(server);
-                            gameserver.removePlayer(uuid);
-                            for(BungeeCord proxy : Init.proxys) {
-                                proxy.sendTheProxyAMessage("UPDATESERVERPLAYERSIZE " + server + " " + gameserver.getSize());
+                            if(gameserver != null) {
+                                gameserver.removePlayer(uuid);
+                                for(BungeeCord proxy : Init.proxys) {
+                                    proxy.sendTheProxyAMessage("UPDATESERVERPLAYERSIZE " + server + " " + gameserver.getSize());
+                                }
                             }
                         }
                         socket.close();

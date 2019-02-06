@@ -300,6 +300,34 @@ public class Core {
                                     }
                                 }
                                 System.out.println(Main.getPrefix() + "Template created from group '" + server.split("-")[0] + "'");
+                            } else if(line.startsWith("REGISTERGAMESERVER")) {
+                                String[] args = line.split(" ");
+                                String server = args[1];
+                                if(Init.currentstartetserver != null) {
+                                    if(Init.currentstartetserver.getName().equalsIgnoreCase(server)) {
+                                        if(!Init.server_warteschlange.isEmpty()) {
+                                            Init.currentstartetserver = Init.server_warteschlange.get(0);
+                                            Init.server_warteschlange.remove(0);
+                                            Init.currentstartetserver.startServer();
+                                        } else {
+                                            Init.currentstartetserver = null;
+                                        }
+                                    }
+                                }
+                            } else if(line.startsWith("UNREGISTERGAMESERVER")) {
+                                String[] args = line.split(" ");
+                                String server = args[1];
+                                if(Init.currentstartetserver != null) {
+                                    if(Init.currentstartetserver.getName().equalsIgnoreCase(server)) {
+                                        if(!Init.server_warteschlange.isEmpty()) {
+                                            Init.currentstartetserver = Init.server_warteschlange.get(0);
+                                            Init.server_warteschlange.remove(0);
+                                            Init.currentstartetserver.startServer();
+                                        } else {
+                                            Init.currentstartetserver = null;
+                                        }
+                                    }
+                                }
                             }
                         }
                     } catch (IOException e) {

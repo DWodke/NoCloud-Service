@@ -20,6 +20,7 @@ public class Init {
     public static Boolean canServerStart;
     public static ArrayList<ProxyServer> proxy_warteschlange = new ArrayList<ProxyServer>();
     public static ArrayList<GameServer> server_warteschlange = new ArrayList<GameServer>();
+    public static GameServer currentstartetserver;
 
     public static void startBase() {
         FileManager.loadAllFiles();

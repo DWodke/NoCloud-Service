@@ -36,25 +36,8 @@ public class GameServer {
         this.maxplayers = max;
     }
     public void startServer() {
-        if(Init.canServerStart) {
-            Init.canServerStart = false;
-            final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-            scheduler.scheduleAtFixedRate(new Runnable() {
-                @Override
-                public void run() {
-                    Init.canServerStart = true;
-                    if(!Init.proxy_warteschlange.isEmpty()) {
-                        ProxyServer server = Init.proxy_warteschlange.get(0);
-                        server.startServer();
-                        Init.proxy_warteschlange.remove(server);
-                    } else if(!Init.server_warteschlange.isEmpty()) {
-                        GameServer server = Init.server_warteschlange.get(0);
-                        server.startServer();
-                        Init.server_warteschlange.remove(server);
-                    }
-                    scheduler.shutdown();
-                }
-            }, 2, 1, TimeUnit.SECONDS);
+        if(Init.currentstartetserver == null || Init.currentstartetserver == this) {
+            Init.currentstartetserver = this;
             this.isStarted = true;
             File folder = new File("./Base/temporary/" + this.group.getName() + "/" + this.name + "/");
             if(this.haveTemplate) {
@@ -146,6 +129,17 @@ public class GameServer {
                 writer.println("stop");
                 writer.flush();
             } catch (Exception e) {
+            }
+            if(Init.currentstartetserver != null) {
+                if(Init.currentstartetserver.getName().equalsIgnoreCase(this.name)) {
+                    if(!Init.server_warteschlange.isEmpty()) {
+                        Init.currentstartetserver = Init.server_warteschlange.get(0);
+                        Init.server_warteschlange.remove(0);
+                        Init.currentstartetserver.startServer();
+                    } else {
+                        Init.currentstartetserver = null;
+                    }
+                }
             }
             final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
             scheduler.scheduleAtFixedRate(new Runnable() {
