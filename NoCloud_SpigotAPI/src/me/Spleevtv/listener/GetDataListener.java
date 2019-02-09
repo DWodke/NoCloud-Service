@@ -1,5 +1,7 @@
 package me.Spleevtv.listener;
 
+import me.Spleevtv.events.ServerConnectEvent;
+import me.Spleevtv.events.ServerDisconnectEvent;
 import me.Spleevtv.main.Main;
 import me.Spleevtv.objekts.*;
 import org.bukkit.Bukkit;
@@ -54,6 +56,7 @@ public class GetDataListener implements PluginMessageListener {
                                 state = ServerState.INGAME;
                             }
                             Main.groups.get(group).addServer(new GameServer(name, state, op, mp, base, ip, port));
+                            Bukkit.getServer().getPluginManager().callEvent(new ServerConnectEvent(name, Main.groups.get(group)));
                         }
                     }
                 }
@@ -139,6 +142,7 @@ public class GetDataListener implements PluginMessageListener {
                     } else {
                         servergroup.addServer(new GameServer(name, state, op, mp, base, ip, port));
                     }
+                    Bukkit.getServer().getPluginManager().callEvent(new ServerConnectEvent(name, servergroup));
             } else if(subchannel.equalsIgnoreCase("RemoveServer")) {
                 String server = stream.readUTF();
                 String group = server.split("-")[0];
@@ -149,20 +153,16 @@ public class GetDataListener implements PluginMessageListener {
                         if(sign.getCurrentServer() == servergroup.getServerOutGroup(server)) {
                             servergroup.removeServer(server);
                             sign.search();
+                            Bukkit.getServer().getPluginManager().callEvent(new ServerDisconnectEvent(server, servergroup));
                             return;
                         }
                     }
                     servergroup.removeServer(server);
+                    Bukkit.getServer().getPluginManager().callEvent(new ServerDisconnectEvent(server, servergroup));
                     return;
                 }
                 servergroup.removeServer(server);
-                for(CloudSign sign : Main.signs.values()) {
-                    if(sign.getCurrentServer() == servergroup.getServerOutGroup(server)) {
-                        servergroup.removeServer(server);
-                        sign.search();
-                        return;
-                    }
-                }
+                Bukkit.getServer().getPluginManager().callEvent(new ServerDisconnectEvent(server, servergroup));
             }
         } catch (Exception e1) {
         }

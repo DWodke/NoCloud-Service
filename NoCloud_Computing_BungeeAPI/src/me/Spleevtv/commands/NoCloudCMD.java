@@ -111,6 +111,19 @@ public class NoCloudCMD extends Command {
                 sender.sendMessage(getHelpMap());
                 return;
             }
+        } else if(args.length == 4) {
+            if(args[0].equalsIgnoreCase("editgroup")) {
+                String group = args[1];
+                String argument = args[2];
+                String value = args[3];
+                if(Main.groups.containsKey(group)) {
+                    if(argument.equalsIgnoreCase("onlineAmount")) {
+
+                    }
+                } else {
+                    sender.sendMessage(Main.prefix + "§cThe group §7'§6" + group + "§7' §cdoesn't exists.");
+                }
+            }
         }
     }
     public static String getHelpMap() {
