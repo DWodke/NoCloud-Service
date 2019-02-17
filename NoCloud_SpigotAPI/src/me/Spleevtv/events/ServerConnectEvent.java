@@ -27,4 +27,7 @@ public class ServerConnectEvent extends Event {
     public HandlerList getHandlers() {
         return handlerlist;
     }
+    public static HandlerList getHandlerList() {
+        return handlerlist;
+    }
 }

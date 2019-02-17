@@ -148,9 +148,9 @@ public class GameServer {
                     Init.core.sendTheCoreAMessage("STOPSPIGOTSERVER " + name);
                     process.destroyForcibly();
                     process = null;
-                    Init.game_servers.remove(name);
-                    scheduler.shutdown();
                     if(haveTemplate) {
+                        Init.game_servers.remove(name);
+                        scheduler.shutdown();
                         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
                         scheduler.scheduleAtFixedRate(new Runnable() {
                             @Override

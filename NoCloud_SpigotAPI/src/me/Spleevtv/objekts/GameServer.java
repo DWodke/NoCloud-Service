@@ -54,4 +54,7 @@ public class GameServer {
     public String getHostName() {
         return hostname;
     }
+    public Integer getServerId() {
+        return Integer.parseInt(this.name.split("-")[1]);
+    }
 }

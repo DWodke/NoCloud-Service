@@ -189,8 +189,10 @@ public class ServerGroup {
     public void startAllServersOutGroup() {
         for(int i = 1; i <= this.maxamount; i++) {
             String name = this.name + "-" + i;
-            GameServer server = new GameServer(name, ServerProcessManager.getNextFreePort(this.startPort), this, this.maxram, this.haveTemplate, this.maxplayers);
-            server.startServer();
+            if(!Init.game_servers.containsKey(name)) {
+                GameServer server = new GameServer(name, ServerProcessManager.getNextFreePort(this.startPort), this, this.maxram, this.haveTemplate, this.maxplayers);
+                server.startServer();
+            }
         }
     }
     public Boolean startNextServer() {
